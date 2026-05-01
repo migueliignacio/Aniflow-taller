@@ -1,0 +1,52 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+
+// Opcional: Colores diferentes según el nombre de la tag
+const tagStyles: Record<string, string> = {
+  // Acción y Shonen
+  Acción: "bg-red-500/20 text-red-400 border-red-500/50",
+  Aventura: "bg-emerald-500/20 text-emerald-400 border-emerald-500/50",
+  Shonen: "bg-blue-600/20 text-blue-400 border-blue-600/50",
+  Seinen: "bg-slate-700/20 text-slate-300 border-slate-600/50",
+
+  // Romance y Slice of Life
+  Romance: "bg-pink-500/20 text-pink-400 border-pink-500/50",
+  Drama: "bg-orange-500/20 text-orange-400 border-orange-500/50",
+  "Slice of Life": "bg-sky-400/20 text-sky-300 border-sky-400/50",
+  Comedia: "bg-yellow-500/20 text-yellow-400 border-yellow-500/50",
+  Shoujo: "bg-rose-400/20 text-rose-300 border-rose-400/50",
+
+  // Fantasía y Ciencia Ficción
+  Fantasía: "bg-purple-600/20 text-purple-400 border-purple-600/50",
+  Isekai: "bg-indigo-500/20 text-indigo-400 border-indigo-500/50",
+  "Sci-Fi": "bg-cyan-500/20 text-cyan-400 border-cyan-500/50",
+  Mecha: "bg-blue-900/20 text-blue-300 border-blue-800/50",
+  Cyberpunk: "bg-fuchsia-600/20 text-fuchsia-400 border-fuchsia-600/50",
+
+  // Terror y Misterio
+  Terror: "bg-red-950/40 text-red-500 border-red-900/50",
+  Misterio: "bg-gray-800/40 text-gray-400 border-gray-700/50",
+  Psicológico: "bg-zinc-900/40 text-zinc-400 border-zinc-700/50",
+  Sobrenatural: "bg-violet-900/20 text-violet-300 border-violet-700/50",
+  Suspenso: "bg-amber-900/20 text-amber-500 border-amber-800/50",
+
+  // Deporte y Otros
+  Deportes: "bg-lime-500/20 text-lime-400 border-lime-500/50",
+  Música: "bg-teal-500/20 text-teal-400 border-teal-500/50",
+  Escolar: "bg-blue-400/20 text-blue-200 border-blue-400/30",
+  Histórico: "bg-stone-600/20 text-stone-400 border-stone-600/50",
+
+  // Default para géneros no listados
+  default: "bg-slate-500/20 text-slate-400 border-slate-500/50",
+};
+
+const currentStyle = tagStyles[name] || tagStyles["default"];
+---
+
+<span class={`px-2 py-1 rounded-md text-xs font-bold border ${currentStyle}`}>
+  {name}
+</span>

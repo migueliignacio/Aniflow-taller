@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  number: string | number;
+  type: "canon" | "relleno" | "mixto";
+  duration?: string;
+}
+
+const { title, number, type, duration }: Props = Astro.props;
+
+const typeColors = {
+  canon: "bg-canon",
+  relleno: "bg-filler",
+  mixto: "bg-mix",
+};
+
+const color = typeColors[type] || typeColors.canon;
+---
+
+<div
+  class="relative flex items-center w-full bg-bg-light dark:bg-bg-dark rounded-lg overflow-hidden shadow-md border dark:border-text-dark/10 border-text-light/10 h-20"
+>
+  <div class={`absolute left-0 top-0 bottom-0 w-1 ${color}`}></div>
+
+  <div class="flex items-center gap-4 px-4 flex-1 min-w-0">
+    <span
+      class="text-3xl font-black text-text-light dark:text-text-dark whitespace-nowrap"
+      >{number}</span
+    >
+
+    <div class="flex flex-col justify-center min-w-0 flex-1">
+      <span
+        class="text-sm font-medium text-text-light dark:text-text-dark truncate"
+        >{title}</span
+      >
+      <div class="flex items-center gap-2 mt-1">
+        <span
+          class={`text-xs px-2 py-0.5 uppercase rounded ${type === "canon" ? "bg-canon/30 text-canon/95" : type === "relleno" ? "bg-filler/30 text-filler/95" : "bg-mix/30 text-mix/95"}`}
+        >
+          {type}
+        </span>
+        {duration && <span class="text-xs text-gray-400">{duration}</span>}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+
+const allAnime = await getCollection("anime");
+
+const randomIndex = Math.floor(Math.random() * allAnime.length);
+const randomAnime = allAnime[randomIndex];
+
+const { title, synopsis, coverImage, slug } = randomAnime.data;
+---
+
+<div class="relative w-full h-180 overflow-hidden">
+  <!-- IMAGEN -->
+  <img
+    src={coverImage}
+    alt={title}
+    class="w-full h-full object-cover blur-md scale-110"
+  />
+
+  <!-- OVERLAY OSCURO GENERAL -->
+  <div
+    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/10 to-transparent dark:from-bg-dark dark:via-bg-dark/10 dark:to-transparent"
+  >
+  </div>
+
+  <!-- CONTENIDO -->
+  <div
+    class="absolute inset-0 flex flex-col justify-end text-text-light dark:text-text-dark"
+  >
+    <div class="m-10">
+      <p
+        class="rounded-lg bg-[#088963]/50 border-2 border-[#088963]/80 px-2 py-0.5 max-w-max text-[#e6fff7] text-xs font-bold uppercase mb-2"
+      >
+        Randomizer
+      </p>
+
+      <div class="space-y-3">
+        <h1 class="text-4xl font-extrabold max-w-2xl drop-shadow-md">
+          {title}
+        </h1>
+
+        <p
+          class="text-lg max-w-2xl line-clamp-3 text-text-light dark:text-text-dark"
+        >
+          {synopsis}
+        </p>
+
+        <div
+          class="max-w-max px-2 py-1 border-2 border-primary/80 bg-primary/50 font-bold rounded hover:bg-primary/70 hover:drop-shadow-2xl drop-shadow-primary transition-colors"
+        >
+          <a
+            href=`animes/${slug}`
+            class="flex text-center items-center gap-0.5"
+          >
+            <svg
+              class="h-4.5 w-4.5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              ><path
+                d="M5 5.274c0-1.707 1.826-2.792 3.325-1.977l12.362 6.726c1.566.853 1.566 3.101 0 3.953L8.325 20.702C6.826 21.518 5 20.432 5 18.726V5.274Z"
+              ></path></svg
+            >
+            Detalles
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

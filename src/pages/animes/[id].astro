@@ -1,0 +1,134 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Tags from "../../components/Tags.astro";
+import Navbar from "../../components/Navbar.astro";
+import EpisodesCard from "../../components/EpisodesCard.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const allAnime = await getCollection("anime");
+
+  return allAnime.map((anime) => ({
+    params: { id: anime.id },
+    props: { anime },
+  }));
+}
+
+const { anime } = Astro.props;
+const { data } = anime;
+const {
+  title,
+  genres,
+  status,
+  year,
+  synopsis,
+  coverImage,
+  episodesCount,
+  trailerUrl,
+  episodes,
+} = data;
+
+const statuStyle: Record<string, string> = {
+  finalizado: "bg-red-500/20 text-red-400 border-red-500/50",
+  "en emisión": "bg-green-500/20 text-green-400 border-green-500/50",
+  cancelado: "bg-amber-500/20 text-amber-400 border-amber-500/50",
+  default: "bg-slate-400/20 text-slate-300 border-slate-400/50",
+};
+
+const currentStyle = statuStyle[status] || statuStyle["default"];
+---
+
+<Layout title={title}>
+  <Navbar />
+  <!-- HEADER / HERO SECTION -->
+</Layout>
+<div class="relative w-full h-150 overflow-hidden bg-bg-dark">
+  <img
+    src={coverImage}
+    alt={title}
+    class="w-full h-full object-cover blur-sm scale-110 opacity-50"
+  />
+  <!-- DEGRADADO -->
+  <!-- AHHHHHHHHHH NO PUEDO SINCRONIZAR LA TRANSICIÓN, SE VE RE FEO, O QUITAMOS EL DEGRADADO O QUITAMOS LA TRANSICIÓN O LO DEJAMOS ASI-->
+  <div
+    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/20 to-transparent dark:from-bg-dark dark:via-bg-dark/20 dark:to-transparent"
+  >
+  </div>
+  <!-- CONTENIDO DEL TEXTO: -->
+
+  <div class="absolute inset-0 flex flex-col justify-end">
+    <div class="m-10 space-y-3">
+      <h1 class="font-bold text-4xl text-(--color-text) drop-shadow-2xl">
+        {title}
+      </h1>
+
+      <div class="flex gap-2 uppercase font-bold text-(--color-text) flex-wrap">
+        <p
+          class="border-2 rounded-xl px-5 bg-bg-dark/20 text-white border-bg-dark/50 dark:bg-slate-400/20 dark:text-slate-300 dark:border-slate-400/50"
+        >
+          {year}
+        </p>
+
+        <p
+          class="border-2 rounded-xl px-5 bg-bg-dark/20 text-white border-bg-dark/50 dark:bg-slate-400/20 dark:text-slate-300 dark:border-slate-400/50"
+        >
+          {episodesCount} Episodios
+        </p>
+
+        <p class={`border-2 rounded-xl px-5 ${currentStyle}`}>
+          {status}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN DE DETALLES -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mx-10 my-10 items-start">
+  <div
+    class="flex flex-col p-10 gap-6 text-(--color-text) bg-(--color-bg) rounded-xl shadow-xl border border-black/5 dark:border-white/10"
+  >
+    <div class="space-y-4">
+      <div class="inline-block">
+        <h2 class="text-3xl font-bold mb-1">Sinopsis</h2>
+        <div class="h-1 w-12 bg-primary rounded-full"></div>
+      </div>
+      <p class="text-(--color-text)/80 leading-relaxed text-lg max-w-xl">
+        {synopsis}
+      </p>
+    </div>
+
+    <div class="flex gap-3 flex-wrap pt-4">
+      {genres.map((tagName: string) => <Tags name={tagName} />)}
+    </div>
+  </div>
+
+  <section class="w-full">
+    <div
+      class="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
+    >
+      <iframe
+        src={trailerUrl}
+        class="absolute inset-0 w-full h-full"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+</div>
+<!-- SECCIÓN DE EPISODIOS -->
+<div class="px-10">
+  <h2 class="text-3xl font-bold text-(--color-text)">Episodios</h2>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6">
+    {
+      episodes?.map((episode) => (
+        <EpisodesCard
+          title={episode.title}
+          number={episode.number}
+          type={episode.type}
+          duration={episode.duration}
+        />
+      ))
+    }
+  </div>
+</div>
+<Footer />
