@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+
+const allAnime = await getCollection("anime");
+
+const randomIndex = Math.floor(Math.random() * allAnime.length);
+const randomAnime = allAnime[randomIndex];
+
+const { title, synopsis, coverImage } = randomAnime.data;
+---
+
+<div class="relative w-full h-150 overflow-hidden">
+  <img
+    src={coverImage}
+    alt={title}
+    class="w-full h-full object-cover blur-md scale-110"
+  />
+
+  <div
+    class="absolute inset-0 flex flex-col justify-end bg-black/50 text-(--color-text)"
+  >
+    <div class="m-10">
+      <p
+        class="rounded-lg bg-[#088963] px-2 py-0.5 max-w-max text-[#e6fff7] text-xs font-bold uppercase mb-2"
+      >
+        Randomizer
+      </p>
+
+      <div class="space-y-3">
+        <h1 class="text-4xl font-extrabold max-w-2xl drop-shadow-md">
+          {title}
+        </h1>
+
+        <p class="text-lg max-w-2xl line-clamp-3 text-gray-200">
+          {synopsis}
+        </p>
+
+        <button
+          class="bg-[#0070f3] font-bold rounded-md px-6 py-2 hover:bg-[#0056B3] transition-colors cursor-pointer"
+        >
+          IR
+          <a></a>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
