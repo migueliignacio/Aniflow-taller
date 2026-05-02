@@ -11,6 +11,16 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="es">
   <head>
+    <script is:inline>
+      const theme = (() => {
+        const stored = localStorage.getItem("theme");
+        if (stored) return stored;
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      })();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -19,27 +29,6 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <div>
-      <slot />
-    </div>
+    <slot />
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --color-primary: #0070f3;
-    --color-secondary: #1c1c1e;
-    --color-background: #333333;
-    --color-text: #ffffff;
-  }
-
-  html {
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-      sans-serif;
-  }
-
-  body {
-    background: #333333;
-  }
-</style>
