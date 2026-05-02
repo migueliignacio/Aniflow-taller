@@ -2,10 +2,10 @@
 title: "One Piece"
 slug: "one-piece"
 synopsis: "Monkey D. Luffy se embarca en una aventura épica para encontrar el tesoro legendario One Piece y convertirse en el Rey de los Piratas. A lo largo de su viaje, recluta una tripulación diversa y enfrenta a enemigos formidables en un mundo lleno de aventura."
-coverImage: "https://images.unsplash.com/photo-1601850494422-1cf0f43f5f55?w=600&h=800&fit=crop"
-trailerUrl: "https://www.youtube.com/watch?v=6X-PX1TiU_8"
-genres: ["Accion", "Aventura", "Comedia", "Shonen"]
-status: "finalizado"
+coverImage: "https://i.pinimg.com/736x/04/65/2b/04652b44ea7c1275d1022d98d59ecc97.jpg"
+trailerUrl: "https://www.youtube.com/embed/LHTYpWI3S6Q"
+genres: ["Acción", "Aventura", "Comedia", "Shonen"]
+status: "en emisión"
 year: 1999
 episodesCount: 1100
 viewtime:
