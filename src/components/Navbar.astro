@@ -1,46 +1,45 @@
 ---
+
 ---
 
-<header class="py-2 px-4 bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] transition-colors duration-300">
-  <div class="flex justify-between items-center">
-    <div class="text-center">
-      <h1 class="text-[var(--color-primary)] dark:text-[var(--color-primary)] text-4xl uppercase font-black">
-        Aniflow
-      </h1>
-    </div>
+<header
+  class="py-3 px-6 bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] transition-colors duration-300"
+>
+  <div class="flex items-center gap-8">
+    <h1
+      class="text-[var(--color-primary)] dark:text-[var(--color-primary)] text-2xl uppercase font-black whitespace-nowrap"
+    >
+      Aniflow
+    </h1>
 
-    <div class="flex">
-      <nav class="ml-auto">
-        <ul class="flex space-x-4">
-          <li>
-            <a
-              href="/"
-              class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors"
-            >
-              Inicio
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors"
-            >
-              Animes
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <nav class="flex items-center">
+      <ul class="flex gap-6">
+        <li>
+          <a
+            href="/"
+            class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors font-medium"
+          >
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors font-medium"
+          >
+            Animes
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-    <div class="flex items-center">
+    <div class="flex items-center gap-3 ml-auto">
       <input
         type="text"
         placeholder="Buscar..."
-        class="bg-[var(--color-secondary)] text-[var(--color-text-dark)] placeholder:text-gray-500 border border-gray-600 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+        class="w-48 px-3 py-1.5 rounded-lg bg-[var(--color-secondary)] text-[var(--color-text-dark)] placeholder:text-gray-500 border border-gray-600 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] text-sm"
       />
-    </div>
 
-    <div class="flex items-center ml-4">
       <button
         id="theme-toggle"
         class="p-2 rounded-lg bg-[var(--color-secondary)] text-[var(--color-text-dark)] hover:bg-[var(--color-primary)] hover:text-white transition-all"
@@ -49,7 +48,7 @@
         <svg
           id="sun-icon"
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 hidden dark:block"
+          class="h-5 w-5 hidden dark:block"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -64,7 +63,7 @@
         <svg
           id="moon-icon"
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 block dark:hidden"
+          class="h-5 w-5 block dark:hidden"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -79,8 +78,6 @@
       </button>
       <script is:inline>
         const btn = document.getElementById("theme-toggle");
-        const sunIcon = document.getElementById("sun-icon");
-        const moonIcon = document.getElementById("moon-icon");
 
         btn?.addEventListener("click", () => {
           const isDark = document.documentElement.classList.toggle("dark");
