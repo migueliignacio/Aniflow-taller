@@ -1,0 +1,55 @@
+---
+title: "Attack on Titan"
+slug: "attack-on-titan"
+synopsis: "En un mundo donde la humanidad vive rodeada por enormes titanes, Eren Yeager jura exterminarlos después de presenciar cómo destruyen su hogar y devoran a su madre. Una historia oscura sobre supervivencia, sacrificio y los secretos de la humanidad."
+coverImage: "https://images.unsplash.com/photo-1607604276583-c77c76ae4c1f?w=600&h=800&fit=crop&sat=-100"
+trailerUrl: "https://www.youtube.com/watch?v=M19gF0X4GrA"
+genres: ["Accion", "Drama", "Horror", "Shonen"]
+status: "finalizado"
+year: 2013
+episodesCount: 87
+viewtime:
+  canon: "85h"
+  full: "120h"
+episodes:
+  - number: 1
+    title: "To You, 2,000 Years Later"
+    type: "canon"
+    duration: "24min"
+  - number: 2
+    title: "That Day"
+    type: "canon"
+    duration: "24min"
+  - number: 3
+    title: "The Small Smile"
+    type: "relleno"
+    duration: "24min"
+  - number: 4
+    title: "The First Door"
+    type: "canon"
+    duration: "24min"
+  - number: 5
+    title: "The Struggle for Wings"
+    type: "canon"
+    duration: "24min"
+  - number: 6
+    title: "Brave Soldiers"
+    type: "mixto"
+    duration: "24min"
+  - number: 7
+    title: "Sara's Memory"
+    type: "relleno"
+    duration: "24min"
+  - number: 8
+    title: "I Can Hear His Heartbeat"
+    type: "canon"
+    duration: "24min"
+  - number: 9
+    title: "The Fall of Trost"
+    type: "canon"
+    duration: "24min"
+  - number: 10
+    title: "The World After the Fall"
+    type: "canon"
+    duration: "24min"
+---
