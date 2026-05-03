@@ -25,6 +25,7 @@ const {
   coverImage,
   episodesCount,
   trailerUrl,
+  episodes,
 } = data;
 
 const statuStyle: Record<string, string> = {
@@ -41,7 +42,7 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
   <Navbar />
   <!-- HEADER / HERO SECTION -->
 </Layout>
-<div class="relative w-full h-150 overflow-hidden bg-(--color-bg-dark)">
+<div class="relative w-full h-150 overflow-hidden bg-bg-dark">
   <img
     src={coverImage}
     alt={title}
@@ -50,7 +51,7 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
   <!-- DEGRADADO -->
   <!-- AHHHHHHHHHH NO PUEDO SINCRONIZAR LA TRANSICIÓN, SE VE RE FEO, O QUITAMOS EL DEGRADADO O QUITAMOS LA TRANSICIÓN O LO DEJAMOS ASI-->
   <div
-    class="absolute inset-0 bg-gradient-to-t from-(--color-bg-light) via-(--color-bg-light)/20 to-transparent dark:from-(--color-bg-dark) dark:via-(--color-bg-dark)/20 dark:to-transparent"
+    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/20 to-transparent dark:from-bg-dark dark:via-bg-dark/20 dark:to-transparent"
   >
   </div>
   <!-- CONTENIDO DEL TEXTO: -->
@@ -92,7 +93,7 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
     <div class="space-y-4">
       <div class="inline-block">
         <h2 class="text-3xl font-bold mb-1">Sinopsis</h2>
-        <div class="h-1 w-12 bg-(--color-primary) rounded-full"></div>
+        <div class="h-1 w-12 bg-primary rounded-full"></div>
       </div>
       <p class="text-(--color-text)/80 leading-relaxed text-lg max-w-xl">
         {synopsis}
@@ -114,11 +115,20 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
         allowfullscreen></iframe>
     </div>
   </section>
-  <!-- SECCIÓN DE EPISODIOS -->
-  <div>
-    <h2 class="text-3xl font-bold text-(--color-text)">Episodios</h2>
-    <div>
-      <EpisodesCard />
-    </div>
+</div>
+<!-- SECCIÓN DE EPISODIOS -->
+<div class="px-10">
+  <h2 class="text-3xl font-bold text-(--color-text)">Episodios</h2>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6">
+    {
+      episodes?.map((episode) => (
+        <EpisodesCard
+          title={episode.title}
+          number={episode.number}
+          type={episode.type}
+          duration={episode.duration}
+        />
+      ))
+    }
   </div>
 </div>
