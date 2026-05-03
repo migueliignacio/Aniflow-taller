@@ -1,31 +1,40 @@
 ---
+import { getCollection } from "astro:content";
 
+const allAnime = await getCollection("anime");
+const animeData = allAnime.map((a) => ({
+  id: a.id,
+  title: a.data.title,
+  slug: a.data.slug,
+}));
 ---
 
 <header
-  class="py-3 px-6 bg-[var(--color-bg-light)] dark:bg-[var(--color-bg-dark)] transition-colors duration-300"
+  class="py-3 px-4 md:px-6 bg-bg-light dark:bg-bg-dark transition-colors duration-300"
 >
-  <div class="flex items-center gap-8">
-    <h1
-      class="text-[var(--color-primary)] dark:text-[var(--color-primary)] text-2xl uppercase font-black whitespace-nowrap"
+  <div class="flex items-center gap-4 md:gap-8">
+    <a
+      href="/"
+      aria-label="Aniflow Logo"
+      class="text-primary dark:text-primary text-xl md:text-2xl uppercase font-black whitespace-nowrap"
     >
       Aniflow
-    </h1>
+    </a>
 
-    <nav class="flex items-center">
+    <nav class="hidden md:flex items-center">
       <ul class="flex gap-6">
         <li>
           <a
             href="/"
-            class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors font-medium"
+            class="text-text-light dark:text-text-dark hover:text-primary dark:hover:text-primary transition-colors font-medium"
           >
             Inicio
           </a>
         </li>
         <li>
           <a
-            href="#"
-            class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary)] transition-colors font-medium"
+            href="#animes"
+            class="text-text-light dark:text-text-dark hover:text-primary dark:hover:text-primary transition-colors font-medium"
           >
             Animes
           </a>
@@ -33,16 +42,41 @@
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3 ml-auto">
-      <input
-        type="text"
-        placeholder="Buscar..."
-        class="w-48 px-3 py-1.5 rounded-lg bg-[var(--color-secondary)] text-[var(--color-text-dark)] placeholder:text-gray-500 border border-gray-600 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] text-sm"
-      />
+    <div class="flex items-center gap-2 md:gap-3 ml-auto">
+      <div class="relative">
+        <div class="flex items-center">
+          <div class="absolute left-3 pointer-events-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4.5 w-4.5 text-text-light dark:text-text-dark"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar animes..."
+            class="w-32 md:w-48 pl-9 pr-3 py-2 rounded-full text-text-light dark:bg-bg-dark dark:text-text-dark border border-transparent focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-all placeholder:text-text-light dark:placeholder:text-text-dark"
+          />
+        </div>
+        <div
+          id="search-results"
+          class="absolute top-full left-0 right-0 mt-2 bg-bg-light dark:bg-bg-dark rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50 max-h-64 overflow-y-auto"
+        >
+        </div>
+      </div>
 
       <button
         id="theme-toggle"
-        class="p-2 rounded-lg bg-[var(--color-secondary)] text-[var(--color-text-dark)] hover:bg-[var(--color-primary)] hover:text-white transition-all"
+        class="p-2 rounded-lg hover:bg-primary hover:text-white transition-all cursor-pointer"
         aria-label="Cambiar tema"
       >
         <svg
@@ -76,14 +110,57 @@
           ></path>
         </svg>
       </button>
-      <script is:inline>
-        const btn = document.getElementById("theme-toggle");
-
-        btn?.addEventListener("click", () => {
-          const isDark = document.documentElement.classList.toggle("dark");
-          localStorage.setItem("theme", isDark ? "dark" : "light");
-        });
-      </script>
     </div>
   </div>
 </header>
+
+<script type="module" define:vars={{ animeData }}>
+  const searchInput = document.getElementById("search-input");
+  const searchResults = document.getElementById("search-results");
+
+  searchInput?.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    if (!query) {
+      searchResults.classList.add("hidden");
+      return;
+    }
+
+    const filtered = animeData.filter((a) =>
+      a.title.toLowerCase().includes(query),
+    );
+
+    if (filtered.length === 0) {
+      searchResults.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">No se encontraron resultados</div>`;
+    } else {
+      searchResults.innerHTML = filtered
+        .map(
+          (anime) => `
+          <a href="/animes/${anime.slug}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <span class="text-sm font-medium text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">${anime.title}</span>
+          </a>
+        `,
+        )
+        .join("");
+    }
+
+    searchResults.classList.remove("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      !searchInput?.contains(e.target) &&
+      !searchResults?.contains(e.target)
+    ) {
+      searchResults.classList.add("hidden");
+    }
+  });
+</script>
+
+<script is:inline>
+  const btn = document.getElementById("theme-toggle");
+
+  btn?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+</script>
