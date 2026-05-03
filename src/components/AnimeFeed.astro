@@ -7,7 +7,7 @@ const animes = await getCollection("anime");
 <div id="animes" class="pt-10">
   <h2 class="text-4xl font-bold mb-4 px-10">Animes</h2>
   <section
-    class="grid gap-6 px-10 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]"
+    class="grid gap-6 px-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
   >
     {
       animes.map((anime) => (

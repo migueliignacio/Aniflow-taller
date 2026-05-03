@@ -9,15 +9,25 @@ const randomAnime = allAnime[randomIndex];
 const { title, synopsis, coverImage } = randomAnime.data;
 ---
 
-<div class="relative w-full h-150 overflow-hidden">
+<div class="relative w-full h-180 overflow-hidden">
+  <!-- IMAGEN -->
   <img
     src={coverImage}
     alt={title}
     class="w-full h-full object-cover blur-md scale-110"
   />
 
+  <!-- OVERLAY OSCURO GENERAL -->
+  <div class="absolute inset-0 bg-bg-light/10 dark:bg-bg-dark/10"></div>
+
   <div
-    class="absolute inset-0 flex flex-col justify-end bg-black/50 text-(--color-text)"
+    class="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-b bg-transparent via-bg-light/30 to-bg-light dark:via-bg-dark/60 dark:to-bg-dark"
+  >
+  </div>
+
+  <!-- CONTENIDO -->
+  <div
+    class="absolute inset-0 flex flex-col justify-end text-text-light dark:text-text-dark"
   >
     <div class="m-10">
       <p
@@ -31,15 +41,16 @@ const { title, synopsis, coverImage } = randomAnime.data;
           {title}
         </h1>
 
-        <p class="text-lg max-w-2xl line-clamp-3 text-gray-200">
+        <p
+          class="text-lg max-w-2xl line-clamp-3 text-text-light dark:text-text-dark"
+        >
           {synopsis}
         </p>
 
         <button
-          class="bg-[#0070f3] font-bold rounded-md px-6 py-2 hover:bg-[#0056B3] transition-colors cursor-pointer"
+          class="bg-primary font-bold rounded-md px-6 py-2 hover:bg-[#0056B3] transition-colors cursor-pointer"
         >
           IR
-          <a></a>
         </button>
       </div>
     </div>
