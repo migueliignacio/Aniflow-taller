@@ -6,8 +6,8 @@ coverImage: "https://i.pinimg.com/736x/04/65/2b/04652b44ea7c1275d1022d98d59ecc97
 trailerUrl: "https://www.youtube.com/embed/LHTYpWI3S6Q"
 genres: ["Acción", "Aventura", "Comedia", "Shonen"]
 status: "en emisión"
-year: 1999
 episodesCount: 1100
+year: 1999
 viewtime:
   canon: "85h"
   full: "120h"
@@ -1453,7 +1453,7 @@ episodes:
     type: "canon"
     duration: "24min"
   - number: 361
-    title: "¡Perona aterrada! La "U" de "Uso" es la "U" de "Usopp""
+    title: '¡Perona aterrada! La "U" de "Uso" es la "U" de "Usopp"'
     type: "canon"
     duration: "24min"
   - number: 362
