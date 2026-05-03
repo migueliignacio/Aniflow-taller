@@ -5,7 +5,7 @@
   --color-primary: #0070f3;
   --color-secondary: #1c1c1e;
 
-  --color-bg-light: #f3f5ff;
+  --color-bg-light: #DEDEDE;
   --color-bg-dark: #1a1a1a;
   --color-text-light: #333333;
   --color-text-dark: #ffffff;
@@ -35,7 +35,7 @@ html {
 body {
   background-color: var(--color-bg-light);
   color: var(--color-text-light);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.3s ease;
 }
 
 .dark body {
