@@ -6,7 +6,7 @@ const allAnime = await getCollection("anime");
 const randomIndex = Math.floor(Math.random() * allAnime.length);
 const randomAnime = allAnime[randomIndex];
 
-const { title, synopsis, coverImage } = randomAnime.data;
+const { title, synopsis, coverImage, slug } = randomAnime.data;
 ---
 
 <div class="relative w-full h-180 overflow-hidden">
@@ -18,10 +18,8 @@ const { title, synopsis, coverImage } = randomAnime.data;
   />
 
   <!-- OVERLAY OSCURO GENERAL -->
-  <div class="absolute inset-0 bg-bg-light/10 dark:bg-bg-dark/10"></div>
-
   <div
-    class="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-b bg-transparent via-bg-light/30 to-bg-light dark:via-bg-dark/60 dark:to-bg-dark"
+    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/10 to-transparent dark:from-bg-dark dark:via-bg-dark/10 dark:to-transparent"
   >
   </div>
 
@@ -31,7 +29,7 @@ const { title, synopsis, coverImage } = randomAnime.data;
   >
     <div class="m-10">
       <p
-        class="rounded-lg bg-[#088963] px-2 py-0.5 max-w-max text-[#e6fff7] text-xs font-bold uppercase mb-2"
+        class="rounded-lg bg-[#088963]/50 border-2 border-[#088963]/80 px-2 py-0.5 max-w-max text-[#e6fff7] text-xs font-bold uppercase mb-2"
       >
         Randomizer
       </p>
@@ -47,11 +45,28 @@ const { title, synopsis, coverImage } = randomAnime.data;
           {synopsis}
         </p>
 
-        <button
-          class="bg-primary font-bold rounded-md px-6 py-2 hover:bg-[#0056B3] transition-colors cursor-pointer"
+        <div
+          class="max-w-max px-2 py-1 border-2 border-primary/80 bg-primary/50 font-bold rounded hover:bg-primary/70 hover:drop-shadow-2xl drop-shadow-primary transition-colors cursor-pointer"
         >
-          IR
-        </button>
+          <a
+            href=`animes/${slug}`
+            class="flex text-center items-center gap-0.5"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4.5 w-4.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 2c5.523 0 10 4.478 10 10s-4.477 10-10 10S2 17.522 2 12 6.477 2 12 2Zm.002 13.004a.999.999 0 1 0 0 1.997.999.999 0 0 0 0-1.997ZM12 7a1 1 0 0 0-.993.884L11 8l.002 5.001.007.117a1 1 0 0 0 1.986 0l.007-.117L13 8l-.007-.117A1 1 0 0 0 12 7Z"
+              ></path></svg
+            >Detalles
+          </a>
+        </div>
       </div>
     </div>
   </div>
