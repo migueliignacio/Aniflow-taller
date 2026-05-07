@@ -1,46 +1,112 @@
-# Astro Starter Kit: Basics
+# AniFlow
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+AniFlow es una aplicación web desarrollada con **Astro** y **TailwindCSS** para explorar y visualizar información de distintos animes populares.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+El proyecto fue construido con un enfoque moderno, rápido y responsivo utilizando componentes reutilizables y rutas dinámicas.
 
-## 🚀 Project Structure
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+## Tecnologías utilizadas
 
-```text
+* [Astro](https://astro.build/)
+* [TailwindCSS](https://tailwindcss.com/)
+* TypeScript
+* PNPM
+
+---
+
+## Estructura del proyecto
+
+```bash
 /
 ├── public/
 │   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── components/
+│   │   ├── AnimeFeed.astro
+│   │   ├── EpisodesCard.astro
+│   │   ├── Footer.astro
+│   │   ├── MainHero.astro
+│   │   ├── Navbar.astro
+│   │   └── Tags.astro
+│   ├── content/
+│   │   └── *.md
+│   ├── layouts/
+│   │   └── Layout.astro
+│   └── pages/
+│       ├── animes/
+│       │   └── [id].astro
+│       └── index.astro
+├── package.json
+└── README.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+---
 
-## 🧞 Commands
+## Instalación
 
-All commands are run from the root of the project, from a terminal:
+Clona el repositorio:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+```bash
+git clone https://github.com/migueliignacio/Aniflow-taller.git
+```
 
-## 👀 Want to learn more?
+Ingresa al proyecto:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+cd Aniflow-taller
+```
+
+Instala las dependencias:
+
+```bash
+pnpm install
+```
+
+---
+
+## Scripts disponibles
+
+| Comando        | Descripción                      |
+| -------------- | -------------------------------- |
+| `pnpm dev`     | Inicia el servidor de desarrollo |
+| `pnpm build`   | Genera la versión de producción  |
+| `pnpm preview` | Previsualiza el build generado   |
+| `pnpm astro`   | Ejecuta comandos de Astro CLI    |
+
+---
+
+## Ejecutar el proyecto
+
+```bash
+pnpm run dev
+```
+
+El proyecto estará disponible en:
+
+```bash
+http://localhost:4321
+```
+
+---
+
+## Características
+
+* Diseño moderno y responsive
+* Navegación dinámica por animes
+* Componentes reutilizables
+* Contenido basado en Markdown
+* Arquitectura escalable
+* Optimización de rendimiento gracias a Astro
+
+---
+
+## Autor
+
+Desarrollado por Matias Rocha, Miguel Rocha y Cristofer Leiva.
+
+---
+
+## Licencia
+
+Este proyecto es únicamente con fines educativos y de práctica.
