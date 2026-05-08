@@ -32,13 +32,28 @@ html {
     sans-serif;
 }
 
+
+
 body {
   background-color: var(--color-bg-light);
   color: var(--color-text-light);
-  transition: background-color 0.2s ease, color 0.3s ease;
 }
+
+
 
 .dark body {
   background-color: var(--color-bg-dark);
   color: var(--color-text-dark);
+}
+
+body.no-theme-transition,
+body.no-theme-transition * {
+  transition: none !important;
+  animation: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

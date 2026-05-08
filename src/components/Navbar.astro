@@ -98,13 +98,45 @@ const location = Astro.url.pathname;
       </button>
     </div>
   </div>
+</header>
+<script is:inline>
+  const btn = document.getElementById("theme-toggle");
 
-  <script is:inline>
-    const btn = document.getElementById("theme-toggle");
-
-    btn?.addEventListener("click", () => {
+  btn?.addEventListener("click", () => {
+    const changeTheme = () => {
+      document.body.classList.add("no-theme-transition");
       const isDark = document.documentElement.classList.toggle("dark");
       localStorage.setItem("theme", isDark ? "dark" : "light");
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.body.classList.remove("no-theme-transition");
+        });
+      });
+    };
+
+    if (!document.startViewTransition) {
+      changeTheme();
+      return;
+    }
+
+    document.body.classList.add("no-theme-transition");
+    const transition = document.startViewTransition(changeTheme);
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: ["inset(0 0 100% 0)", "inset(0)"],
+        },
+        {
+          duration: 600,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
     });
-  </script>
-</header>
+
+    transition.finished.then(() => {
+      document.body.classList.remove("no-theme-transition");
+    });
+  });
+</script>

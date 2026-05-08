@@ -17,6 +17,7 @@ export async function getStaticPaths() {
 
 const { anime } = Astro.props;
 const { data } = anime;
+
 const {
   title,
   genres,
@@ -26,108 +27,526 @@ const {
   coverImage,
   episodesTotal,
   trailerUrl,
-  episodes,
+  episodes = [],
+  canonEpisodes,
+  fillerEpisodes,
+  mixedEpisodes,
 } = data;
 
-const statuStyle: Record<string, string> = {
+const statusStyle: Record<string, string> = {
   finished: "bg-red-500/20 text-red-400 border-red-500/50",
   ongoing: "bg-green-500/20 text-green-400 border-green-500/50",
+  cancel: "bg-slate-500/20 text-slate-300 border-slate-500/50",
   default: "bg-slate-400/20 text-slate-300 border-slate-400/50",
 };
 
-const currentStyle = statuStyle[status] || statuStyle["default"];
+const statusText: Record<string, string> = {
+  finished: "Finalizado",
+  ongoing: "En emisión",
+  cancel: "Cancelado",
+};
+
+const currentStyle = statusStyle[status] || statusStyle["default"];
+
+const canonCount =
+  canonEpisodes ??
+  episodes.filter((episode) => episode.type === "canon").length;
+
+const fillerCount =
+  fillerEpisodes ??
+  episodes.filter((episode) => episode.type === "relleno").length;
+
+const mixedCount =
+  mixedEpisodes ??
+  episodes.filter((episode) => episode.type === "mixto").length;
 ---
 
-<Layout title={title}>
+<Layout title={`Aniflow - ${title}`} bodyClass="no-theme-transition">
   <Navbar />
-  <!-- HEADER / HERO SECTION -->
-</Layout>
-<div class="relative w-full h-150 overflow-hidden bg-bg-dark">
-  <img
-    src={coverImage}
-    alt={title}
-    class="w-full h-full object-cover blur-sm scale-110 opacity-50"
-  />
-  <!-- DEGRADADO -->
-  <!-- AHHHHHHHHHH NO PUEDO SINCRONIZAR LA TRANSICIÓN, SE VE RE FEO, O QUITAMOS EL DEGRADADO O QUITAMOS LA TRANSICIÓN O LO DEJAMOS ASI-->
+
+  <!-- HERO -->
   <div
-    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/20 to-transparent dark:from-bg-dark dark:via-bg-dark/20 dark:to-transparent"
+    class="relative w-full h-150 overflow-hidden bg-bg-light dark:bg-bg-dark"
   >
-  </div>
-  <!-- CONTENIDO DEL TEXTO: -->
+    <img
+      src={coverImage}
+      alt={title}
+      class="w-full h-full object-cover blur-sm scale-110 opacity-50"
+    />
 
-  <div class="absolute inset-0 flex flex-col justify-end">
-    <div class="m-10 space-y-3">
-      <h1 class="font-bold text-4xl text-(--color-text) drop-shadow-2xl">
-        {title}
-      </h1>
+    <div
+      class="absolute inset-0 bg-linear-to-t from-bg-light dark:from-bg-dark via-bg-light/20 dark:via-bg-dark/20 to-transparent"
+    >
+    </div>
 
-      <div class="flex gap-2 uppercase font-bold text-(--color-text) flex-wrap">
-        <p
-          class="border-2 rounded-xl px-5 bg-bg-dark/20 text-white border-bg-dark/50 dark:bg-slate-400/20 dark:text-slate-300 dark:border-slate-400/50"
+    <div class="absolute inset-0 flex flex-col justify-end">
+      <div class="m-10 space-y-3">
+        <h1
+          class="font-bold text-4xl text-text-light dark:text-text-dark drop-shadow-2xl"
         >
-          {year}
-        </p>
+          {title}
+        </h1>
 
-        <p
-          class="border-2 rounded-xl px-5 bg-bg-dark/20 text-white border-bg-dark/50 dark:bg-slate-400/20 dark:text-slate-300 dark:border-slate-400/50"
+        <div
+          class="flex gap-2 uppercase font-bold text-text-light dark:text-text-dark flex-wrap"
         >
-          {episodesTotal} Episodios
-        </p>
+          <p
+            class="border-2 rounded-xl px-5 bg-bg-light dark:bg-bg-dark/20 text-white border-bg-light dark:border-bg-dark dark:bg-bg-dark/50"
+          >
+            {year}
+          </p>
 
-        <p class={`border-2 rounded-xl px-5 ${currentStyle}`}>
-          {status === "finished" ? "finalizado" : "en emisión"}
-        </p>
+          <p
+            class="border-2 rounded-xl px-5 bg-bg-light dark:bg-bg-dark/20 text-white border-bg-light dark:border-bg-dark dark:bg-bg-dark/50"
+          >
+            {episodesTotal} Episodios
+          </p>
+
+          <p class={`border-2 rounded-xl px-5 ${currentStyle}`}>
+            {statusText[status] ?? status}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- SECCIÓN DE DETALLES -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mx-10 my-10 items-start">
+  <!-- DETALLES -->
   <div
-    class="flex flex-col p-10 gap-6 text-(--color-text) bg-(--color-bg) rounded-xl shadow-xl border border-black/5 dark:border-white/10"
+    class="grid grid-cols-1 lg:grid-cols-2 gap-10 my-10 items-start max-w-7xl mx-auto px-4"
   >
-    <div class="space-y-4">
-      <div class="inline-block">
-        <h2 class="text-3xl font-bold mb-1">Sinopsis</h2>
-        <div class="h-1 w-12 bg-primary rounded-full"></div>
+    <div
+      class="flex flex-col p-10 gap-6 text-text-light dark:text-text-dark bg-bg-light dark:bg-bg-dark rounded-xl shadow-xl border border-white/10"
+    >
+      <div class="space-y-4">
+        <div class="inline-block">
+          <h2 class="text-3xl font-bold mb-1">Sinopsis</h2>
+          <div class="h-1 w-12 bg-primary rounded-full"></div>
+        </div>
+
+        <p
+          class="text-text-light dark:text-text-dark/80 leading-relaxed text-lg max-w-xl"
+        >
+          {synopsis}
+        </p>
       </div>
-      <p class="text-(--color-text)/80 leading-relaxed text-lg max-w-xl">
-        {synopsis}
+
+      <div class="flex gap-3 flex-wrap pt-4">
+        {genres.map((tagName: string) => <Tags name={tagName} />)}
+      </div>
+    </div>
+
+    {
+      trailerUrl && (
+        <section class="w-full">
+          <div class="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/20">
+            <iframe
+              src={trailerUrl}
+              class="absolute inset-0 w-full h-full"
+              allowfullscreen
+            />
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <!-- STATS -->
+  <section class="max-w-7xl mx-auto px-4 my-10 space-y-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div
+        class="rounded-2xl border border-white/10 bg-bg-light dark:bg-bg-dark p-6 text-center shadow-xl"
+      >
+        <p class="text-3xl font-extrabold text-text-light dark:text-text-dark">
+          {episodesTotal}
+        </p>
+        <p class="text-sm text-text-light dark:text-text-dark/60 mt-2">
+          Total episodios
+        </p>
+      </div>
+
+      <div
+        class="rounded-2xl border border-canon/30 bg-canon/5 p-6 text-center shadow-[0_0_25px_rgba(16,185,129,0.08)]"
+      >
+        <p class="text-3xl font-extrabold text-canon">
+          {canonCount}
+        </p>
+        <p class="text-sm text-text-light dark:text-text-dark/60 mt-2">Canon</p>
+      </div>
+
+      <div
+        class="rounded-2xl border border-filler/30 bg-filler/5 p-6 text-center shadow-[0_0_25px_rgba(239,68,68,0.08)]"
+      >
+        <p class="text-3xl font-extrabold text-filler">
+          {fillerCount}
+        </p>
+        <p class="text-sm text-text-light dark:text-text-dark/60 mt-2">
+          Relleno
+        </p>
+      </div>
+
+      <div
+        class="rounded-2xl border border-mix/30 bg-mix/5 p-6 text-center shadow-[0_0_25px_rgba(245,158,11,0.08)]"
+      >
+        <p class="text-3xl font-extrabold text-mix">
+          {mixedCount}
+        </p>
+        <p class="text-sm text-text-light dark:text-text-dark/60 mt-2">Mixto</p>
+      </div>
+    </div>
+
+    <!-- PROGRESO -->
+    <div
+      id="progress-widget"
+      class="rounded-2xl border border-white/10 bg-bg-light dark:bg-bg-dark p-8 shadow-xl opacity-0 transition-opacity duration-200"
+    >
+      <div
+        class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between"
+      >
+        <div>
+          <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">
+            Progreso de visualización
+          </h2>
+          <p class="mt-2 text-text-light dark:text-text-dark/60">
+            Estado de episodios vistos
+          </p>
+        </div>
+
+        <div class="flex items-end gap-3">
+          <span
+            id="progress-count"
+            class="text-5xl font-extrabold text-primary"
+          >
+            0
+          </span>
+
+          <span class="mb-2 text-text-light dark:text-text-dark/60">
+            / {episodesTotal} vistos
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-8 h-3 w-full overflow-hidden rounded-full bg-black/20">
+        <div
+          id="progress-bar"
+          class="h-full bg-primary rounded-full"
+          style="width: 0%"
+        >
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-end">
+        <button
+          type="button"
+          id="reset-progress"
+          class="text-sm text-text-light dark:text-text-dark/60 transition-colors hover:text-primary cursor-pointer"
+        >
+          Reiniciar progreso
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EPISODIOS -->
+  <div class="max-w-7xl mx-auto px-4">
+    <div
+      class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+    >
+      <div>
+        <h2 class="text-3xl font-bold text-text-light dark:text-text-dark">
+          Episodios
+        </h2>
+        <p class="text-text-light dark:text-text-dark/70 mt-2">
+          Filtra los episodios según su tipo de contenido.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          class="episode-filter group relative overflow-hidden rounded-xl border border-primary/50 bg-primary/20 px-4 py-2 text-sm font-bold text-primary transition-[transform,background-color,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary/30 hover:border-primary hover:shadow-[0_0_20px_rgba(0,112,243,0.25)] active:scale-95"
+          data-filter="all"
+        >
+          <span
+            class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-primary/10 to-transparent"
+          >
+          </span>
+
+          <span class="relative z-10">Todos</span>
+        </button>
+
+        <button
+          class="episode-filter group relative overflow-hidden rounded-xl border border-canon/50 bg-canon/10 px-4 py-2 text-sm font-bold text-canon transition-[transform,background-color,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-canon/20 hover:border-canon hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] active:scale-95"
+          data-filter="canon"
+        >
+          <span
+            class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-canon/10 to-transparent"
+          >
+          </span>
+
+          <span class="relative z-10">Canon</span>
+        </button>
+
+        <button
+          class="episode-filter group relative overflow-hidden rounded-xl border border-mix/50 bg-mix/10 px-4 py-2 text-sm font-bold text-mix transition-[transform,background-color,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-mix/20 hover:border-mix hover:shadow-[0_0_20px_rgba(245,158,11,0.25)] active:scale-95"
+          data-filter="mixto"
+        >
+          <span
+            class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-mix/10 to-transparent"
+          >
+          </span>
+
+          <span class="relative z-10">Mixto</span>
+        </button>
+
+        <button
+          class="episode-filter group relative overflow-hidden rounded-xl border border-filler/50 bg-filler/10 px-4 py-2 text-sm font-bold text-filler transition-[transform,background-color,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-filler/20 hover:border-filler hover:shadow-[0_0_20px_rgba(239,68,68,0.25)] active:scale-95"
+          data-filter="relleno"
+        >
+          <span
+            class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-filler/10 to-transparent"
+          >
+          </span>
+
+          <span class="relative z-10">Relleno</span>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="episodes-grid"
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6"
+    >
+      <div id="sentinel" class="h-4 w-full col-span-full"></div>
+    </div>
+
+    <div id="no-episodes" class="hidden py-16 text-center">
+      <p class="text-text-light dark:text-text-dark/70 text-lg">
+        No hay episodios para este filtro.
       </p>
     </div>
 
-    <div class="flex gap-3 flex-wrap pt-4">
-      {genres.map((tagName: string) => <Tags name={tagName} />)}
+    <div id="loading-indicator" class="hidden py-8 text-center">
+      <div
+        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"
+      >
+      </div>
     </div>
   </div>
+</Layout>
 
-  <section class="w-full">
-    <div
-      class="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/20"
-    >
-      <iframe
-        src={trailerUrl}
-        class="absolute inset-0 w-full h-full"
-        allowfullscreen></iframe>
-    </div>
-  </section>
-</div>
-<!-- SECCIÓN DE EPISODIOS -->
-<div class="px-10">
-  <h2 class="text-3xl font-bold text-(--color-text)">Episodios</h2>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6">
-    {
-      episodes?.map((episode) => (
-        <EpisodesCard
-          title={episode.title}
-          number={episode.number}
-          type={episode.type}
-          duration={episode.duration}
-        />
-      ))
+<script define:vars={{ animeId: anime.id, episodesTotal, episodes }}>
+  const STORAGE_KEY = `aniflow_watched_${animeId}`;
+  const BATCH_SIZE = 50;
+
+  const progressWidget = document.getElementById("progress-widget");
+  const progressCount = document.getElementById("progress-count");
+  const progressBar = document.getElementById("progress-bar");
+  const resetButton = document.getElementById("reset-progress");
+
+  const episodesContainer = document.getElementById("episodes-grid");
+  const sentinel = document.getElementById("sentinel");
+  const noEpisodes = document.getElementById("no-episodes");
+  const loadingIndicator = document.getElementById("loading-indicator");
+  const filterButtons = [...document.querySelectorAll(".episode-filter")];
+  const filterContainer = document.querySelector(".episode-filters");
+
+  let loadedCount = 0;
+  let currentFilter = "all";
+  let filteredEpisodes = [...episodes];
+  let renderedCount = 0;
+  let isLoading = false;
+
+  const getWatchedEpisodes = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(saved) ? saved.map(String) : [];
+    } catch {
+      return [];
     }
-  </div>
-</div>
+  };
+
+  const watchedEpisodes = new Set(getWatchedEpisodes());
+
+  const saveWatchedEpisodes = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...watchedEpisodes]));
+  };
+
+  const updateProgress = () => {
+    const watchedCount = watchedEpisodes.size;
+    const percent =
+      episodesTotal > 0 ? (watchedCount / episodesTotal) * 100 : 0;
+
+    if (progressCount) progressCount.textContent = String(watchedCount);
+    if (progressBar) progressBar.style.width = `${percent}%`;
+
+    saveWatchedEpisodes();
+  };
+
+  const createEpisodeCard = (episode) => {
+    const typeColors = {
+      canon: "bg-canon",
+      relleno: "bg-filler",
+      mixto: "bg-mix",
+    };
+    const typeBadge = {
+      canon: "bg-canon/30 text-canon/95",
+      relleno: "bg-filler/30 text-filler/95",
+      mixto: "bg-mix/30 text-mix/95",
+    };
+    const color = typeColors[episode.type] || typeColors.canon;
+    const badgeColor = typeBadge[episode.type] || typeBadge.canon;
+    const isWatched = watchedEpisodes.has(String(episode.number));
+
+    return `
+      <button
+        type="button"
+        class="episode-card group relative flex h-20 w-full items-center overflow-hidden rounded-lg border border-black/20 bg-bg-light dark:bg-bg-dark text-text-light dark:text-text-dark text-left shadow-sm transition-[transform,border-color,box-shadow,opacity] duration-300 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_10px_30px_rgba(0,112,243,0.15)] active:scale-[0.98] ${isWatched ? "opacity-70 ring-2 ring-canon/40" : ""}"
+        data-episode-number="${episode.number}"
+        aria-pressed="${isWatched}"
+      >
+        <div class="absolute left-0 top-0 bottom-0 w-1 ${color} transition-all duration-300 group-hover:w-2"></div>
+        <div class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-primary/5 via-transparent to-transparent"></div>
+        <div class="relative z-10 flex min-w-0 flex-1 items-center gap-4 px-4">
+          <span class="whitespace-nowrap text-3xl font-black text-text-light dark:text-text-dark transition-transform duration-300 group-hover:scale-110 group-hover:text-primary">${episode.number}</span>
+          <div class="flex min-w-0 flex-1 flex-col justify-center">
+            <span class="truncate text-sm font-medium text-text-light dark:text-text-dark transition-colors duration-300 group-hover:text-primary">${episode.title}</span>
+            <div class="mt-1 flex items-center gap-2">
+              <span class="rounded px-2 py-0.5 text-xs uppercase transition-transform duration-300 group-hover:scale-105 ${badgeColor}">${episode.type}</span>
+              ${episode.duration ? `<span class="text-xs text-text-light/50 dark:text-text-dark/50 transition-colors duration-300 group-hover:text-text-light/70 dark:group-hover:text-text-dark/70">${episode.duration}</span>` : ""}
+            </div>
+          </div>
+          <div class="episode-check flex h-8 w-8 shrink-0 items-center justify-center rounded-full border ${isWatched ? "bg-canon border-canon text-white" : "border-text-light/10 dark:border-text-dark/10 bg-text-light/5 dark:bg-text-dark/5 text-text-light/40 dark:text-text-dark/40"} text-xs transition-all duration-300 group-hover:scale-110 group-hover:border-primary/40 group-hover:text-primary">
+            ✓
+          </div>
+        </div>
+      </button>
+    `;
+  };
+
+  const renderBatch = () => {
+    if (isLoading || renderedCount >= filteredEpisodes.length) return;
+
+    isLoading = true;
+    loadingIndicator?.classList.remove("hidden");
+
+    requestAnimationFrame(() => {
+      const nextBatch = filteredEpisodes.slice(
+        renderedCount,
+        renderedCount + BATCH_SIZE,
+      );
+      const fragment = document.createDocumentFragment();
+
+      nextBatch.forEach((episode) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "episode-item";
+        wrapper.dataset.type = episode.type;
+        wrapper.innerHTML = createEpisodeCard(episode);
+        fragment.appendChild(wrapper.firstElementChild);
+      });
+
+      sentinel.before(fragment);
+      renderedCount += nextBatch.length;
+      isLoading = false;
+      loadingIndicator?.classList.add("hidden");
+
+      const newCards = [...document.querySelectorAll(".episode-card")].slice(
+        -nextBatch.length,
+      );
+      newCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          const episodeNumber = String(card.dataset.episodeNumber);
+          const currentlyWatched = watchedEpisodes.has(episodeNumber);
+
+          if (currentlyWatched) {
+            watchedEpisodes.delete(episodeNumber);
+          } else {
+            watchedEpisodes.add(episodeNumber);
+          }
+
+          setCardState(card, !currentlyWatched);
+          updateProgress();
+        });
+      });
+
+      if (renderedCount < filteredEpisodes.length) {
+        observeSentinel();
+      }
+    });
+  };
+
+  let observer = null;
+
+  const observeSentinel = () => {
+    if (observer) observer.disconnect();
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          renderBatch();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(sentinel);
+  };
+
+  const setCardState = (card, isWatched) => {
+    card.setAttribute("aria-pressed", String(isWatched));
+    card.classList.toggle("opacity-70", isWatched);
+    card.classList.toggle("ring-2", isWatched);
+    card.classList.toggle("ring-canon/40", isWatched);
+
+    const check = card.querySelector(".episode-check");
+    if (!check) return;
+
+    check.classList.toggle("bg-canon", isWatched);
+    check.classList.toggle("border-canon", isWatched);
+    check.classList.toggle("text-white", isWatched);
+    check.classList.toggle("bg-text-light/5", !isWatched);
+    check.classList.toggle("dark:bg-text-dark/5", !isWatched);
+    check.classList.toggle("border-text-light/10", !isWatched);
+    check.classList.toggle("dark:border-text-dark/10", !isWatched);
+    check.classList.toggle("text-text-light/40", !isWatched);
+    check.classList.toggle("dark:text-text-dark/40", !isWatched);
+  };
+
+  const applyFilter = (filter) => {
+    currentFilter = filter;
+    filteredEpisodes =
+      filter === "all"
+        ? [...episodes]
+        : episodes.filter((ep) => ep.type === filter);
+    renderedCount = 0;
+
+    const existingItems = document.querySelectorAll(".episode-item");
+    existingItems.forEach((item) => item.remove());
+
+    noEpisodes?.classList.toggle("hidden", filteredEpisodes.length > 0);
+    renderBatch();
+  };
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedFilter = button.dataset.filter;
+
+      filterButtons.forEach((btn) => {
+        btn.classList.remove("scale-105", "ring-2", "ring-primary/40");
+      });
+      button.classList.add("scale-105", "ring-2", "ring-primary/40");
+
+      applyFilter(selectedFilter);
+    });
+  });
+
+  resetButton?.addEventListener("click", () => {
+    watchedEpisodes.clear();
+    document.querySelectorAll(".episode-card").forEach((card) => {
+      setCardState(card, false);
+    });
+    updateProgress();
+  });
+
+  updateProgress();
+  progressWidget?.classList.remove("opacity-0");
+  applyFilter("all");
+</script>
+
 <Footer />
