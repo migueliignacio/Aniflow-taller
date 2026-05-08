@@ -14,33 +14,67 @@ const typeColors = {
   mixto: "bg-mix",
 };
 
+const typeBadge = {
+  canon: "bg-canon/30 text-canon/95",
+  relleno: "bg-filler/30 text-filler/95",
+  mixto: "bg-mix/30 text-mix/95",
+};
+
 const color = typeColors[type] || typeColors.canon;
+const badgeColor = typeBadge[type] || typeBadge.canon;
 ---
 
-<div
-  class="relative flex items-center w-full bg-bg-light dark:bg-bg-dark rounded-lg overflow-hidden shadow-md border dark:border-text-dark/10 border-text-light/10 h-20"
+<button
+  type="button"
+  class="episode-card group relative flex h-20 w-full items-center overflow-hidden rounded-lg border border-black/20 bg-bg-light dark:bg-bg-dark text-text-light dark:text-text-dark text-left shadow-sm transition-[transform,border-color,box-shadow,opacity] duration-300 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_10px_30px_rgba(0,112,243,0.15)] active:scale-[0.98]"
+  data-episode-number={number}
+  aria-pressed="false"
 >
-  <div class={`absolute left-0 top-0 bottom-0 w-1 ${color}`}></div>
+  <div
+    class={`absolute left-0 top-0 bottom-0 w-1 ${color} transition-all duration-300 group-hover:w-2`}
+  >
+  </div>
 
-  <div class="flex items-center gap-4 px-4 flex-1 min-w-0">
+  <div
+    class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-r from-primary/5 via-transparent to-transparent"
+  >
+  </div>
+
+  <div class="relative z-10 flex min-w-0 flex-1 items-center gap-4 px-4">
     <span
-      class="text-3xl font-black text-text-light dark:text-text-dark whitespace-nowrap"
-      >{number}</span
+      class="whitespace-nowrap text-3xl font-black text-text-light dark:text-text-dark transition-transform duration-300 group-hover:scale-110 group-hover:text-primary"
     >
+      {number}
+    </span>
 
-    <div class="flex flex-col justify-center min-w-0 flex-1">
+    <div class="flex min-w-0 flex-1 flex-col justify-center">
       <span
-        class="text-sm font-medium text-text-light dark:text-text-dark truncate"
-        >{title}</span
+        class="truncate text-sm font-medium text-text-light dark:text-text-dark transition-colors duration-300 group-hover:text-primary"
       >
-      <div class="flex items-center gap-2 mt-1">
+        {title}
+      </span>
+
+      <div class="mt-1 flex items-center gap-2">
         <span
-          class={`text-xs px-2 py-0.5 uppercase rounded ${type === "canon" ? "bg-canon/30 text-canon/95" : type === "relleno" ? "bg-filler/30 text-filler/95" : "bg-mix/30 text-mix/95"}`}
+          class={`rounded px-2 py-0.5 text-xs uppercase transition-transform duration-300 group-hover:scale-105 ${badgeColor}`}
         >
           {type}
         </span>
-        {duration && <span class="text-xs text-gray-400">{duration}</span>}
+
+        {
+          duration && (
+            <span class="text-xs text-text-light dark:text-text-dark/50 transition-colors duration-300 group-hover:text-text-light dark:text-text-dark/70">
+              {duration}
+            </span>
+          )
+        }
       </div>
     </div>
+
+    <div
+      class="episode-check flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-text-light/10 dark:border-text-dark/10 bg-text-light/5 dark:bg-text-dark/5 text-xs text-text-light dark:text-text-dark/40 transition-all duration-300 group-hover:scale-110 group-hover:border-primary/40 group-hover:text-primary"
+    >
+      ✓
+    </div>
   </div>
-</div>
+</button>
