@@ -56,6 +56,21 @@ const location = Astro.url.pathname;
           >
           </div>
         </li>
+        <li class="flex flex-col">
+          <a
+            href="/about"
+            class="font-medium text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary"
+          >
+            About
+          </a>
+
+          <div
+            class={`mt-1 h-0.5 w-full origin-left rounded-full bg-primary transition-transform duration-300 ${
+              location === "/about" ? "scale-x-100" : "scale-x-0"
+            }`}
+          >
+          </div>
+        </li>
       </ul>
     </nav>
 
