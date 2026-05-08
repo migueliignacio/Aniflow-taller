@@ -18,7 +18,9 @@ const statuStyle: Record<string, string> = {
 const currentStyle = statuStyle[status] || statuStyle["default"];
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-10 mx-10 items-center py-20">
+<div
+  class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-20 mx-4 xl:mx-0"
+>
   <!-- CONTENIDO -->
   <div class="space-y-3 pt-20">
     <h1 class="text-5xl font-extrabold leading-tight">
@@ -34,9 +36,9 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
 
   <!-- Cartita -->
   <div class="flex justify-center md:justify-end">
-    <a href=`/animes/${slug}`>
+    <a href=`/anime/${slug}`>
       <div
-        class="w-64 h-80 rounded-3xl bg-linear-to-br from-[#232438] to-[#1A1B2E] border border-white/10 overflow-hidden shadow-2xl transform hover:rotate-2 transition-transform duration-300"
+        class="w-64 h-80 rounded-3xl bg-linear-to-br from-[#232438] to-[#1A1B2E] border border-white/10 overflow-hidden shadow-2xl transform hover:rotate-2 transition-transform duration-300 hover:border-primary/30 hover:shadow-[0_0_40px_rgba(0,112,243,0.15)]"
       >
         <div class="bg-[#18181B] rounded-3xl overflow-hidden w-64 shadow-xl">
           <div class="h-40 w-full overflow-hidden">
