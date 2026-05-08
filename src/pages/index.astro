@@ -5,33 +5,90 @@ import Navbar from "../components/Navbar.astro";
 import AnimeCard from "../components/AnimeCard.astro";
 import Footer from "../components/Footer.astro";
 import MainHero from "../components/MainHero.astro";
+import HowItWorks from "../components/sections/HowItWorks.astro";
+import Eyn from "../components/sections/Eyn.astro";
+import Contact from "../components/sections/Contact.astro";
+
 const popularAnime = await getCollection("anime");
 ---
 
 <Layout title="Aniflow - Tu fuente de anime personalizada">
   <Navbar />
-  <main class="max-w-7xl mx-auto">
-    <MainHero />
-    <section
-      class="grid grid-cols-1 mx-5 gap-6 sm:grid-cols-2 xl:mx-0 xl:grid-cols-3"
+
+  <main class="">
+    <div class="max-w-7xl mx-auto">
+      <MainHero />
+    </div>
+
+    <div
+      class="absolute inset-0 -z-10 opacity-20
+    bg-[url('/patterns/pattern-dark.svg')]
+    dark:bg-[url('/patterns/pattern-light.svg')]"
     >
-      {
-        popularAnime
-          .slice(0, 6)
-          .map((anime) => (
-            <AnimeCard
-              title={anime.data.title}
-              coverImage={anime.data.coverImage}
-              status={anime.data.status}
-              slug={anime.data.slug}
-              episodesTotal={anime.data.episodesTotal}
-              canon={anime.data.canonEpisodes}
-              relleno={anime.data.fillerEpisodes}
-              mixto={anime.data.mixedEpisodes}
-            />
-          ))
-      }
+    </div>
+    <Eyn />
+    <HowItWorks />
+
+    <section class="bg-bg-dark/5 dark:bg-bg-light/5 py-25">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <span
+            class="inline-block px-4 py-1.5 rounded-md bg-[#EC4899]/10 border border-[#EC4899]/20 text-[#EC4899] text-sm font-medium mb-4"
+            >Catálogo</span
+          >
+          <h2
+            class="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-(--color-text) mb-4"
+          >
+            Animes populares
+          </h2>
+          <p class="text-[#A1A1AA] text-lg">
+            Las series más vistas con sus guías de episodios actualizadas
+          </p>
+        </div>
+
+        <div
+          class="grid grid-cols-1 mx-5 gap-6 sm:grid-cols-2 xl:mx-0 xl:grid-cols-3"
+        >
+          {
+            popularAnime
+              .slice(0, 6)
+              .map((anime) => (
+                <AnimeCard
+                  title={anime.data.title}
+                  coverImage={anime.data.coverImage}
+                  status={anime.data.status}
+                  slug={anime.data.slug}
+                  episodesTotal={anime.data.episodesTotal}
+                  canon={anime.data.canonEpisodes}
+                  relleno={anime.data.fillerEpisodes}
+                  mixto={anime.data.mixedEpisodes}
+                />
+              ))
+          }
+        </div>
+        <div class="flex text-center items-center w-full justify-center mt-10">
+          <a
+            href="/animes"
+            class="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl border border-bg-dark/20 dark:border-bg-light/20 text-(--color-text) font-medium text-lg hover:bg-primary/80 hover:scale-102 transition-all duration-300"
+          >
+            Ver todos los animes
+            <svg
+              class="w-5 h-5 transition-transform group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
     </section>
+    <Contact />
   </main>
   <Footer />
 </Layout>

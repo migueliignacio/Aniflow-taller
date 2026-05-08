@@ -6,11 +6,13 @@ import Navbar from "../../components/Navbar.astro";
 import EpisodesCard from "../../components/EpisodesCard.astro";
 import Footer from "../../components/Footer.astro";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const allAnime = await getCollection("anime");
 
   return allAnime.map((anime) => ({
-    params: { id: anime.id },
+    params: { id: anime.data.slug },
     props: { anime },
   }));
 }
@@ -440,7 +442,7 @@ const mixedCount =
         wrapper.className = "episode-item";
         wrapper.dataset.type = episode.type;
         wrapper.innerHTML = createEpisodeCard(episode);
-        fragment.appendChild(wrapper.firstElementChild);
+        fragment.appendChild(wrapper);
       });
 
       sentinel.before(fragment);
@@ -448,9 +450,9 @@ const mixedCount =
       isLoading = false;
       loadingIndicator?.classList.add("hidden");
 
-      const newCards = [...document.querySelectorAll(".episode-card")].slice(
-        -nextBatch.length,
-      );
+      const newCards = [
+        ...episodesContainer.querySelectorAll(".episode-card"),
+      ].slice(-nextBatch.length);
       newCards.forEach((card) => {
         card.addEventListener("click", () => {
           const episodeNumber = String(card.dataset.episodeNumber);
@@ -485,7 +487,7 @@ const mixedCount =
       },
       { rootMargin: "200px" },
     );
-    observer.observe(sentinel);
+    if (sentinel) observer.observe(sentinel);
   };
 
   const setCardState = (card, isWatched) => {
@@ -516,16 +518,18 @@ const mixedCount =
         : episodes.filter((ep) => ep.type === filter);
     renderedCount = 0;
 
-    const existingItems = document.querySelectorAll(".episode-item");
+    const existingItems = episodesContainer.querySelectorAll(".episode-item");
     existingItems.forEach((item) => item.remove());
 
     noEpisodes?.classList.toggle("hidden", filteredEpisodes.length > 0);
+
+    if (observer) observer.disconnect();
     renderBatch();
   };
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const selectedFilter = button.dataset.filter;
+      const selectedFilter = button.dataset.filter ?? "all";
 
       filterButtons.forEach((btn) => {
         btn.classList.remove("scale-105", "ring-2", "ring-primary/40");

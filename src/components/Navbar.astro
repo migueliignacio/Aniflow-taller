@@ -1,13 +1,4 @@
 ---
-import { getCollection } from "astro:content";
-
-const allAnime = await getCollection("anime");
-const animeData = allAnime.map((a) => ({
-  id: a.id,
-  title: a.data.title,
-  slug: a.data.slug,
-}));
-
 const location = Astro.url.pathname;
 ---
 
@@ -61,7 +52,7 @@ const location = Astro.url.pathname;
             href="/about"
             class="font-medium text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary"
           >
-            About
+            Nosotros
           </a>
 
           <div
