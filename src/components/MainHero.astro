@@ -1,21 +1,17 @@
 ---
 import { getCollection } from "astro:content";
+import Tags from "../components/Tags.astro";
 
 const allAnime = await getCollection("anime");
 
 const randomIndex = Math.floor(Math.random() * allAnime.length);
 const randomAnime = allAnime[randomIndex];
 
-const { title, synopsis, coverImage, slug, episodesTotal, status, stats } =
+const { title, coverImage, slug, episodesTotal, status, stats, genres } =
   randomAnime.data;
 
-const statuStyle: Record<string, string> = {
-  finished: "bg-[#EF4444]/20 text-[#EF4444] ",
-  ongoing: "bg-green-500/20 text-green-400 border-green-500/50",
-  default: "bg-slate-400/20 text-slate-300 border-slate-400/50",
-};
-
-const currentStyle = statuStyle[status] || statuStyle["default"];
+const randomGenreIndex = Math.floor(Math.random() * genres.length);
+const randomGenre = genres[randomGenreIndex];
 ---
 
 <div
@@ -38,9 +34,9 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
   <div class="flex justify-center md:justify-end">
     <a href=`/anime/${slug}`>
       <div
-        class="w-64 h-80 rounded-3xl bg-linear-to-br from-[#232438] to-[#1A1B2E] border border-white/10 overflow-hidden shadow-2xl transform hover:rotate-2 transition-transform duration-300 hover:border-primary/30 hover:shadow-[0_0_40px_rgba(0,112,243,0.15)]"
+        class="w-64 h-80 rounded-3xl border border-white/10 overflow-hidden shadow-2xl transform hover:rotate-2 transition-transform duration-500 hover:border-primary/30 hover:shadow-[0_0_40px_rgba(0,112,243,0.15)]"
       >
-        <div class="bg-[#18181B] rounded-3xl overflow-hidden w-64 shadow-xl">
+        <div class="rounded-3xl overflow-hidden w-64 shadow-xl">
           <div class="h-40 w-full overflow-hidden">
             <img
               src={coverImage}
@@ -52,29 +48,27 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
           <div class="p-6">
             <div class="flex gap-2">
               <span
-                class="rounded-md bg-primary/20 border px-2 py-0.5 text-primary text-xs font-medium"
+                class="capitalize rounded-md px-3 py-1 text-xs font-medium bg-primary/80 text-white"
                 >Randomizer</span
               >
               <span
-                class={`border rounded-md text-xs px-2 py-0.5 capitalize font-medium ${currentStyle}`}
-                >{status === "finished" ? "finalizado" : "en emisión"}</span
+                class={`capitalize rounded-md px-3 py-1 text-xs font-medium ${
+                  status === "ongoing"
+                    ? "bg-[#22C55E]/80 text-white"
+                    : "bg-black/20 dark:bg-white/20 dark:text-white/80"
+                }`}>{status === "finished" ? "finalizado" : "en emisión"}</span
               >
             </div>
 
-            <h3
-              class="font-display font-bold text-xl line-clamp-1 text-white mb-2"
-            >
+            <h3 class="font-display font-bold text-xl line-clamp-1 mb-2">
               {title}
             </h3>
             <p class="text-[#71717A] text-sm mb-4">{episodesTotal} Episodios</p>
 
             <div class="flex flex-wrap gap-2">
+              <Tags name={randomGenre} />
               <span
-                class="max-h-max content-center px-2 py-0.5 rounded-md text-xs border bg-[#22C55E]/20 text-[#22C55E] font-medium"
-                >Canon</span
-              >
-              <span
-                class="max-h-max px-2 py-0.5 rounded-md border bg-[#EF4444]/20 text-[#EF4444] text-xs font-medium"
+                class="max-h-max capitalize rounded-md px-3 py-1 text-xs font-medium bg-filler/80 text-white"
                 >{stats.fillerPercent}% Relleno</span
               >
             </div>
