@@ -1,0 +1,241 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import AnimeCard from "../../components/AnimeCard.astro";
+import { getCollection } from "astro:content";
+
+const allAnime = await getCollection("anime");
+
+const sortedAnime = allAnime.sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+
+const animeData = sortedAnime.map((anime) => ({
+  title: anime.data.title,
+  slug: anime.data.slug,
+}));
+---
+
+<Layout title="Explorar Animes - Aniflow">
+  <Navbar currentPath="/animes" />
+
+  <main class="min-h-screen pt-16 pb-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 text-center">
+        <h1
+          class="mb-4 font-display text-4xl font-extrabold text-text-light dark:text-text-dark md:text-5xl"
+        >
+          Explorar animes
+        </h1>
+
+        <p class="text-lg text-[#A1A1AA]">
+          Busca y filtra animes para encontrar guías de episodios
+        </p>
+      </div>
+
+      <div class="mb-8">
+        <div class="relative mx-auto max-w-xl">
+          <svg
+            class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#71717A]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar animes..."
+            autocomplete="off"
+            class="w-full rounded-xl border border-bg-dark/20 dark:border-bg-light/20 bg-bg-light dark:bg-bg-dark py-3 pr-4 pl-12 text-text-light dark:text-text-dark placeholder-[#71717A] transition-colors focus:border-primary focus:outline-none"
+          />
+
+          <div
+            id="search-results"
+            class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-xl border border-white/10 bg-[#1A1B2E] shadow-[0_0_30px_rgba(0,112,243,0.15)]"
+          >
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="animes-grid"
+        class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {
+          sortedAnime.map((anime) => (
+            <div class="anime-card" data-title={anime.data.title.toLowerCase()}>
+              <AnimeCard
+                title={anime.data.title}
+                coverImage={anime.data.coverImage}
+                episodesCount={anime.data.episodesTotal}
+                status={anime.data.status}
+                slug={anime.data.slug}
+                canon={anime.data.canonEpisodes}
+                relleno={anime.data.fillerEpisodes}
+                mixto={anime.data.mixedEpisodes}
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <div id="no-results" class="hidden py-16 text-center">
+        <div
+          class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#232438]"
+        >
+          <svg
+            class="h-10 w-10 text-[#71717A]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="mb-2 font-display text-xl font-semibold">
+          No se encontraron resultados
+        </h3>
+
+        <p class="text-[#71717A]">Intenta con otro término de búsqueda</p>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script define:vars={{ animeData }}>
+  const searchInput = document.getElementById("search-input");
+  const searchResults = document.getElementById("search-results");
+  const animeCards = document.querySelectorAll(".anime-card");
+  const noResults = document.getElementById("no-results");
+
+  function normalizeText(text) {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  function getMatches(query) {
+    const normalizedQuery = normalizeText(query);
+
+    if (!normalizedQuery) return [];
+
+    return animeData
+      .map((anime) => {
+        const normalizedTitle = normalizeText(anime.title);
+
+        let score = 0;
+
+        if (normalizedTitle === normalizedQuery) score += 100;
+        if (normalizedTitle.startsWith(normalizedQuery)) score += 70;
+        if (normalizedTitle.includes(normalizedQuery)) score += 50;
+
+        normalizedQuery.split(" ").forEach((word) => {
+          if (word && normalizedTitle.includes(word)) score += 15;
+        });
+
+        return { ...anime, score };
+      })
+      .filter((anime) => anime.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+  }
+
+  function renderSuggestions(results) {
+    if (!searchResults) return;
+
+    if (results.length === 0) {
+      searchResults.innerHTML = `
+        <div class="px-4 py-3 text-sm text-[#71717A]">
+          No se encontraron resultados
+        </div>
+      `;
+      searchResults.classList.remove("hidden");
+      return;
+    }
+
+    searchResults.innerHTML = results
+      .map(
+        (anime) => `
+          <a
+            href="/anime/${anime.slug}"
+            class="block px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10 hover:text-[#8B5CF6]"
+          >
+            ${anime.title}
+          </a>
+        `,
+      )
+      .join("");
+
+    searchResults.classList.remove("hidden");
+  }
+
+  function filterCards(query) {
+    const normalizedQuery = normalizeText(query);
+    let visibleCount = 0;
+
+    animeCards.forEach((card) => {
+      const title = normalizeText(card.dataset.title || "");
+      const matches = !normalizedQuery || title.includes(normalizedQuery);
+
+      card.classList.toggle("hidden", !matches);
+
+      if (matches) visibleCount++;
+    });
+
+    noResults?.classList.toggle("hidden", visibleCount > 0);
+  }
+
+  searchInput?.addEventListener("input", (event) => {
+    const query = event.target.value;
+
+    filterCards(query);
+
+    if (!query.trim()) {
+      searchResults?.classList.add("hidden");
+      return;
+    }
+
+    const results = getMatches(query);
+    renderSuggestions(results);
+  });
+
+  searchInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+
+    event.preventDefault();
+
+    const query = searchInput.value.trim();
+    const results = getMatches(query);
+
+    if (results.length > 0) {
+      window.location.href = `/anime/${results[0].slug}`;
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      !searchInput?.contains(event.target) &&
+      !searchResults?.contains(event.target)
+    ) {
+      searchResults?.classList.add("hidden");
+    }
+  });
+</script>

@@ -14,7 +14,7 @@ const location = Astro.url.pathname;
 <header
   class="sticky top-0 left-0 right-0 m-auto z-50 py-3 px-4 bg-bg-light/40 backdrop-blur-md dark:bg-bg-dark/40 shadow-md border-b border-white/10"
 >
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-4 max-w-7xl mx-auto">
     <a
       href="/"
       aria-label="Aniflow Logo"
@@ -25,62 +25,41 @@ const location = Astro.url.pathname;
 
     <nav class="hidden md:flex items-center">
       <ul class="flex gap-6">
-        <li>
+        <li class="flex flex-col">
           <a
             href="/"
-            class="text-text-light dark:text-text-dark hover:text-primary dark:hover:text-primary transition-colors font-medium"
+            class="font-medium text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary"
           >
             Inicio
           </a>
-          {
-            location === "/" && (
-              <div class="h-0.5 w-auto bg-primary rounded-full mt-1" />
-            )
-          }
+
+          <div
+            class={`mt-1 h-0.5 w-full origin-left rounded-full bg-primary transition-transform duration-300 ${
+              location === "/" ? "scale-x-100" : "scale-x-0"
+            }`}
+          >
+          </div>
         </li>
-        <li>
+
+        <li class="flex flex-col">
           <a
-            href={location === "/" ? "#animes" : "/#animes"}
-            class="text-text-light dark:text-text-dark hover:text-primary dark:hover:text-primary transition-colors font-medium"
+            href="/animes"
+            class="font-medium text-text-light transition-colors hover:text-primary dark:text-text-dark dark:hover:text-primary"
           >
             Animes
           </a>
+
+          <div
+            class={`mt-1 h-0.5 w-full origin-left rounded-full bg-primary transition-transform duration-300 ${
+              location === "/animes" ? "scale-x-100" : "scale-x-0"
+            }`}
+          >
+          </div>
         </li>
       </ul>
     </nav>
 
     <div class="flex items-center gap-2 ml-auto">
-      <div class="relative">
-        <div class="flex items-center">
-          <div class="absolute left-3 pointer-events-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4.5 w-4.5 text-text-light dark:text-text-dark"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </div>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Buscar animes..."
-            class="w-48 pl-9 pr-3 py-2 rounded-full bg-bg-light text-text-light dark:bg-bg-dark dark:text-text-dark border border-transparent focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-all placeholder:text-text-light dark:placeholder:text-text-dark"
-          />
-        </div>
-        <div
-          id="search-results"
-          class="absolute top-full left-0 right-0 mt-2 bg-bg-light dark:bg-bg-dark rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50 max-h-64 overflow-y-auto"
-        >
-        </div>
-      </div>
-
       <button
         id="theme-toggle"
         class="p-2 rounded-lg hover:bg-primary hover:text-white transition-all cursor-pointer"
@@ -119,48 +98,6 @@ const location = Astro.url.pathname;
       </button>
     </div>
   </div>
-
-  <script type="module" define:vars={{ animeData }}>
-    const searchInput = document.getElementById("search-input");
-    const searchResults = document.getElementById("search-results");
-
-    searchInput?.addEventListener("input", (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      if (!query) {
-        searchResults.classList.add("hidden");
-        return;
-      }
-
-      const filtered = animeData.filter((a) =>
-        a.title.toLowerCase().includes(query),
-      );
-
-      if (filtered.length === 0) {
-        searchResults.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">No se encontraron resultados</div>`;
-      } else {
-        searchResults.innerHTML = filtered
-          .map(
-            (anime) => `
-          <a href="/animes/${anime.slug}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-            <span class="text-sm font-medium text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">${anime.title}</span>
-          </a>
-        `,
-          )
-          .join("");
-      }
-
-      searchResults.classList.remove("hidden");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (
-        !searchInput?.contains(e.target) &&
-        !searchResults?.contains(e.target)
-      ) {
-        searchResults.classList.add("hidden");
-      }
-    });
-  </script>
 
   <script is:inline>
     const btn = document.getElementById("theme-toggle");

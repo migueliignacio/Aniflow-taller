@@ -1,0 +1,128 @@
+---
+const {
+  title = "Naruto Shippuden",
+  coverImage = "/naruto.jpg",
+  status = "finalizado",
+  episodesTotal = 500,
+  canon = 300,
+  relleno = 180,
+  mixto = 20,
+  slug = "naruto-shippuden",
+} = Astro.props;
+
+const total = canon + relleno + mixto;
+
+const canonPercent = total > 0 ? (canon / total) * 100 : 0;
+const rellenoPercent = total > 0 ? (relleno / total) * 100 : 0;
+const mixtoPercent = total > 0 ? (mixto / total) * 100 : 0;
+---
+
+<a
+  href={`/anime/${slug}`}
+  class="group relative block transition-transform duration-700 overflow-hidden rounded-2xl bg-bg-light border border-bg-dark/15 text-text-light dark:border-bg-light/15 dark:text-text-dark dark:bg-bg-dark hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_0_40px_rgba(0,112,243,0.15)]"
+>
+  <!-- Imagen -->
+  <div class="relative aspect-video overflow-hidden">
+    <img
+      src={coverImage}
+      alt={title}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 mask-b-from-40% mask-b-to-95%"
+    />
+
+    <div class="absolute inset-0"></div>
+
+    <div class="absolute top-3 right-3">
+      <span
+        class={`rounded-md px-3 py-1 text-xs font-bold backdrop-blur-sm ${
+          status === "ongoing"
+            ? "bg-[#22C55E]/80 text-white"
+            : "bg-white/20 text-white/80"
+        }`}
+      >
+        {status === "ongoing" ? "En Emisión" : "Finalizado"}
+      </span>
+    </div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="flex min-h-55 flex-col p-6">
+    <h3
+      class="mb-3 font-display text-xl font-bold transition-colors group-hover:text-primary"
+    >
+      {title}
+    </h3>
+
+    <div class="mb-4 flex items-center justify-between">
+      <span class="text-sm text-[#71717A]">
+        {episodesTotal} episodios
+      </span>
+
+      <span
+        class={`text-sm font-bold group-hover:text-primary transition-colors`}
+      >
+        {
+          Math.round(rellenoPercent) === 0
+            ? "Sin"
+            : Math.round(rellenoPercent) + "%"
+        } relleno
+      </span>
+    </div>
+
+    <!-- Footer stats -->
+    <div class="mt-auto">
+      <!-- Barra principal -->
+      <div class="flex h-1 w-full overflow-hidden rounded-full bg-white/5">
+        <!-- Canon -->
+        <div
+          class="h-full bg-canon transition-all duration-500"
+          style={`width: ${canonPercent}%`}
+          title={`Canon: ${canon}`}
+        >
+        </div>
+
+        <!-- Mixto -->
+        <div
+          class="h-full bg-mix transition-all duration-500"
+          style={`width: ${mixtoPercent}%`}
+          title={`Mixto: ${mixto}`}
+        >
+        </div>
+
+        <!-- Relleno -->
+        <div
+          class="h-full bg-filler transition-all duration-500"
+          style={`width: ${rellenoPercent}%`}
+          title={`Relleno: ${relleno}`}
+        >
+        </div>
+      </div>
+
+      <!-- Leyenda -->
+      <div class="mt-4 flex flex-wrap gap-3 text-xs">
+        <div class="flex items-center gap-1.5">
+          <div
+            class="h-2 w-2 rounded-full animate-pulse bg-canon shadow-[0_0_10px_rgba(16,185,129,0.9)]"
+          >
+          </div>
+          <span>Canon</span>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <div
+            class="h-2 w-2 rounded-full animate-pulse bg-mix shadow-[0_0_10px_rgba(245,158,11,0.9)]"
+          >
+          </div>
+          <span>Mixto</span>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <div
+            class="h-2 w-2 rounded-full animate-pulse bg-filler shadow-[0_0_10px_rgba(239,68,68,0.9)]"
+          >
+          </div>
+          <span>Relleno</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
