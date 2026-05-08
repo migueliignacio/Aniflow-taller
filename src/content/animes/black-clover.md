@@ -2,12 +2,16 @@
 title: "Black Clover"
 slug: "black-clover"
 synopsis: "Asta, un joven sin magia en un mundo donde esta lo es todo, lucha por convertirse en el Rey Mago mientras entrena junto a su rival Yuno y enfrenta poderosos enemigos."
-status: "finalizado"
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BZmZkZjNhMWMtM2U0Mi00MjdlLTk3NmMtMTMwZjgwOTJmODMzXkEyXkFqcGc@._V1_FMjpg_UX640_.jpg"
 trailerUrl: "https://www.youtube.com/embed/TiIZ2NZxjMI"
 genres: ["Acción", "Fantasía", "Shonen"]
-episodesCount: 170
+episodesTotal: 170
+canonEpisodes: 144
+fillerEpisodes: 17
+mixedEpisodes: 9
 year: 2017
+studio: "Pierrot"
 viewtime:
   canon: "110h"
   full: "130h"

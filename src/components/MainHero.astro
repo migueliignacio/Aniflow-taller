@@ -6,65 +6,79 @@ const allAnime = await getCollection("anime");
 const randomIndex = Math.floor(Math.random() * allAnime.length);
 const randomAnime = allAnime[randomIndex];
 
-const { title, synopsis, coverImage, slug } = randomAnime.data;
+const { title, synopsis, coverImage, slug, episodesTotal, status, stats } =
+  randomAnime.data;
+
+const statuStyle: Record<string, string> = {
+  finished: "bg-[#EF4444]/20 text-[#EF4444] ",
+  ongoing: "bg-green-500/20 text-green-400 border-green-500/50",
+  default: "bg-slate-400/20 text-slate-300 border-slate-400/50",
+};
+
+const currentStyle = statuStyle[status] || statuStyle["default"];
 ---
 
-<div class="relative w-full h-180 overflow-hidden">
-  <!-- IMAGEN -->
-  <img
-    src={coverImage}
-    alt={title}
-    class="w-full h-full object-cover blur-md scale-110"
-  />
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 mx-10 items-center py-20">
+  <!-- CONTENIDO -->
+  <div class="space-y-3 pt-20">
+    <h1 class="text-5xl font-extrabold leading-tight">
+      Mira anime <br />
+      <span class="text-primary">sin rellenos</span>
+    </h1>
 
-  <!-- OVERLAY OSCURO GENERAL -->
-  <div
-    class="absolute inset-0 bg-linear-to-t from-bg-light via-bg-light/10 to-transparent dark:from-bg-dark dark:via-bg-dark/10 dark:to-transparent"
-  >
+    <p class="text-xl max-w-xl leading-relaxed text-gray-400">
+      Identifica episodios canon, relleno y mixtos en segundos. Optimiza tu
+      experiencia.
+    </p>
   </div>
 
-  <!-- CONTENIDO -->
-  <div
-    class="absolute inset-0 flex flex-col justify-end text-text-light dark:text-text-dark"
-  >
-    <div class="m-10">
-      <p
-        class="rounded-lg bg-[#088963]/50 border-2 border-[#088963]/80 px-2 py-0.5 max-w-max text-[#e6fff7] text-xs font-bold uppercase mb-2"
+  <!-- Cartita -->
+  <div class="flex justify-center md:justify-end">
+    <a href=`/animes/${slug}`>
+      <div
+        class="w-64 h-80 rounded-3xl bg-linear-to-br from-[#232438] to-[#1A1B2E] border border-white/10 overflow-hidden shadow-2xl transform hover:rotate-2 transition-transform duration-300"
       >
-        Randomizer
-      </p>
+        <div class="bg-[#18181B] rounded-3xl overflow-hidden w-64 shadow-xl">
+          <div class="h-40 w-full overflow-hidden">
+            <img
+              src={coverImage}
+              alt={title}
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
 
-      <div class="space-y-3">
-        <h1 class="text-4xl font-extrabold max-w-2xl drop-shadow-md">
-          {title}
-        </h1>
+          <div class="p-6">
+            <div class="flex gap-2">
+              <span
+                class="rounded-md bg-primary/20 border px-2 py-0.5 text-primary text-xs font-medium"
+                >Randomizer</span
+              >
+              <span
+                class={`border rounded-md text-xs px-2 py-0.5 capitalize font-medium ${currentStyle}`}
+                >{status === "finished" ? "finalizado" : "en emisión"}</span
+              >
+            </div>
 
-        <p
-          class="text-lg max-w-2xl line-clamp-3 text-text-light dark:text-text-dark"
-        >
-          {synopsis}
-        </p>
-
-        <div
-          class="max-w-max px-2 py-1 border-2 border-primary/80 bg-primary/50 font-bold rounded hover:bg-primary/70 hover:drop-shadow-2xl drop-shadow-primary transition-colors"
-        >
-          <a
-            href=`animes/${slug}`
-            class="flex text-center items-center gap-0.5"
-          >
-            <svg
-              class="h-4.5 w-4.5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              ><path
-                d="M5 5.274c0-1.707 1.826-2.792 3.325-1.977l12.362 6.726c1.566.853 1.566 3.101 0 3.953L8.325 20.702C6.826 21.518 5 20.432 5 18.726V5.274Z"
-              ></path></svg
+            <h3
+              class="font-display font-bold text-xl line-clamp-1 text-white mb-2"
             >
-            Detalles
-          </a>
+              {title}
+            </h3>
+            <p class="text-[#71717A] text-sm mb-4">{episodesTotal} Episodios</p>
+
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="max-h-max content-center px-2 py-0.5 rounded-md text-xs border bg-[#22C55E]/20 text-[#22C55E] font-medium"
+                >Canon</span
+              >
+              <span
+                class="max-h-max px-2 py-0.5 rounded-md border bg-[#EF4444]/20 text-[#EF4444] text-xs font-medium"
+                >{stats.fillerPercent}% Relleno</span
+              >
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 </div>

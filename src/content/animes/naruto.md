@@ -2,12 +2,16 @@
 title: "Naruto"
 slug: "naruto"
 synopsis: "Naruto Uzumaki, un joven ninja con el sueño de convertirse en Hokage, debe superar numerosos desafíos mientras lidia con el espíritu demonio sellado dentro de él. Una historia épica sobre amistad, perseverancia y nunca rendirse."
-status: "finalizado"
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_FMjpg_UX680_.jpg"
 trailerUrl: "https://www.youtube.com/embed/-G9BqkgZXRA?modestbranding=1&rel=0"
 genres: ["Acción", "Aventura", "Shonen"]
-episodesCount: 220
+episodesTotal: 220
+canonEpisodes: 126
+fillerEpisodes: 90
+mixedEpisodes: 4
 year: 2002
+studio: "Pierrot"
 viewtime:
   canon: "85h"
   full: "120h"

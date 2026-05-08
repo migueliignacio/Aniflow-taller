@@ -2,12 +2,16 @@
 title: "Naruto Shippuden"
 slug: "naruto-shippuden"
 synopsis: "Naruto regresa tras años de entrenamiento para enfrentarse a amenazas mucho mayores como Akatsuki, mientras busca rescatar a Sasuke y descubrir su destino como ninja."
-status: "finalizado"
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BNTk3MDA1ZjAtNTRhYS00YzNiLTgwOGEtYWRmYTQ3NjA0NTAwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
 trailerUrl: "https://www.youtube.com/embed/22R0j8UKRzY"
 genres: ["Acción", "Aventura", "Shonen"]
-episodesCount: 500
+episodesTotal: 500
+canonEpisodes: 262
+fillerEpisodes: 193
+mixedEpisodes: 45
 year: 2007
+studio: "Pierrot"
 viewtime:
   canon: "180h"
   full: "200h"

@@ -1,13 +1,17 @@
 ---
 title: "Dragon Ball Super"
 slug: "dragon-ball-super"
-synopsis: 'Después de la derrota de Majin Buu, Goku y sus amigos enfrentan nuevas amenazas a nivel multiversal, incluyendo dioses de la destrucción y torneos entre universos.'
+synopsis: "Después de la derrota de Majin Buu, Goku y sus amigos enfrentan nuevas amenazas a nivel multiversal, incluyendo dioses de la destrucción y torneos entre universos."
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BYTgyMzA5MjEtNDY3Ny00ZDkyLWJhYzEtYzI2Nzk5Mzc3ZDk1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
 trailerUrl: "https://www.youtube.com/embed/OOmRInABehI"
 genres: ["Acción", "Aventura", "Fantasía", "Peleas", "Shonen"]
-status: "finalizado"
+episodesTotal: 131
+canonEpisodes: 114
+fillerEpisodes: 14
+mixedEpisodes: 3
 year: 2015
-episodesCount: 131
+studio: "Toei Animation"
 viewtime:
   canon: "44h"
   full: "52h"

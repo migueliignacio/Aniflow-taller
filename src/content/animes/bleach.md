@@ -2,12 +2,16 @@
 title: "Bleach"
 slug: "bleach"
 synopsis: "Ichigo Kurosaki obtiene los poderes de un Shinigami y debe proteger a los vivos de los Hollows mientras se ve envuelto en conflictos que afectan tanto al mundo humano como a la Sociedad de Almas."
-status: "en emisión"
+status: "ongoing"
 coverImage: "https://upload.wikimedia.org/wikipedia/en/7/72/Bleachanime.png"
 trailerUrl: "https://www.youtube.com/embed/aERutp4HCx0"
 genres: ["Acción", "Sobrenatural", "Shonen"]
-episodesCount: 392
+episodesTotal: 392
+canonEpisodes: 191
+fillerEpisodes: 163
+mixedEpisodes: 38
 year: 2004
+studio: "Pierrot"
 viewtime:
   canon: "130h"
   full: "156h"

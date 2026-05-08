@@ -2,12 +2,16 @@
 title: "Inuyasha"
 slug: "inuyasha"
 synopsis: "Kagome, una estudiante moderna, es transportada al Japón feudal donde conoce a Inuyasha, un medio demonio. Juntos buscan los fragmentos de la Esfera de los Cuatro Espíritus mientras enfrentan demonios y su propio destino."
-status: "finalizado"
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BOTA1ZjIzZTgtNzg2MC00NzU2LWIzZjUtZmU4YjA1ZjlmYWRhXkEyXkFqcGc@._V1_FMjpg_UX456_.jpg"
 trailerUrl: "https://www.youtube.com/embed/UCFBsLagBPk"
 genres: ["Acción", "Aventura", "Fantasía", "Romance", "Shonen"]
-episodesCount: 167
+episodesTotal: 167
+canonEpisodes: 116
+fillerEpisodes: 35
+mixedEpisodes: 16
 year: 2000
+studio: "Sunrise"
 viewtime:
   canon: "100h"
   full: "110h"

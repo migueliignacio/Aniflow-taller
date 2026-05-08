@@ -2,12 +2,16 @@
 title: "Boruto: Naruto Next Generations"
 slug: "boruto"
 synopsis: "Boruto Uzumaki, hijo del Séptimo Hokage Naruto, busca encontrar su propio camino ninja mientras enfrenta nuevas amenazas en una era moderna."
-status: "en emisión"
+status: "ongoing"
 coverImage: "https://m.media-amazon.com/images/M/MV5BNDgzYzNhOGUtMWI1Mi00YjJkLWI2NGItOWFlNDE4ZjE0NGExXkEyXkFqcGc@._V1_FMjpg_UX640_.jpg"
 trailerUrl: "https://www.youtube.com/embed/nQeIObeB--8"
 genres: ["Acción", "Aventura", "Shonen"]
-episodesCount: 293
+episodesTotal: 293
+canonEpisodes: 245
+fillerEpisodes: 37
+mixedEpisodes: 11
 year: 2017
+studio: "Pierrot"
 viewtime:
   canon: "120h"
   full: "170h"

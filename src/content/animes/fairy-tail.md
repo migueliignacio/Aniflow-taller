@@ -2,12 +2,16 @@
 title: "Fairy Tail"
 slug: "fairy-tail"
 synopsis: "Lucy Heartfilia se une al gremio de magos Fairy Tail, donde junto a Natsu, Happy y sus amigos vivirán aventuras, enfrentarán poderosos enemigos y formarán lazos inquebrantables."
-status: "finalizado"
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BODlhNTQ3ZDgtMDJlMC00YzdmLWE3ZTMtOWNmMTZkN2I2MzI5XkEyXkFqcGc@._V1_FMjpg_UX700_.jpg"
 trailerUrl: "https://www.youtube.com/embed/ORbODq-KX94"
 genres: ["Acción", "Aventura", "Fantasía", "Shonen"]
-episodesCount: 328
+episodesTotal: 328
+canonEpisodes: 260
+fillerEpisodes: 62
+mixedEpisodes: 6
 year: 2009
+studio: "A-1 Pictures / Satelight"
 viewtime:
   canon: "150h"
   full: "180h"

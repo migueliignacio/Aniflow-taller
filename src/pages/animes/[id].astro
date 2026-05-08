@@ -24,15 +24,14 @@ const {
   year,
   synopsis,
   coverImage,
-  episodesCount,
+  episodesTotal,
   trailerUrl,
   episodes,
 } = data;
 
 const statuStyle: Record<string, string> = {
-  finalizado: "bg-red-500/20 text-red-400 border-red-500/50",
-  "en emisión": "bg-green-500/20 text-green-400 border-green-500/50",
-  cancelado: "bg-amber-500/20 text-amber-400 border-amber-500/50",
+  finished: "bg-red-500/20 text-red-400 border-red-500/50",
+  ongoing: "bg-green-500/20 text-green-400 border-green-500/50",
   default: "bg-slate-400/20 text-slate-300 border-slate-400/50",
 };
 
@@ -73,11 +72,11 @@ const currentStyle = statuStyle[status] || statuStyle["default"];
         <p
           class="border-2 rounded-xl px-5 bg-bg-dark/20 text-white border-bg-dark/50 dark:bg-slate-400/20 dark:text-slate-300 dark:border-slate-400/50"
         >
-          {episodesCount} Episodios
+          {episodesTotal} Episodios
         </p>
 
         <p class={`border-2 rounded-xl px-5 ${currentStyle}`}>
-          {status}
+          {status === "finished" ? "finalizado" : "en emisión"}
         </p>
       </div>
     </div>

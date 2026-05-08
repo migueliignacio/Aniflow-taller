@@ -1,13 +1,17 @@
 ---
 title: "Dragon Ball Z"
 slug: "dragon-ball-z"
-synopsis: 'Años después, Goku descubre su origen Saiyajin y debe defender la Tierra de poderosos enemigos como Vegeta, Freezer, Cell y Majin Buu, alcanzando niveles de poder legendarios.'
+synopsis: "Años después, Goku descubre su origen Saiyajin y debe defender la Tierra de poderosos enemigos como Vegeta, Freezer, Cell y Majin Buu, alcanzando niveles de poder legendarios."
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BN2VlNTdlMzQtYzE5OC00YmYwLTgyZTItYjEzMWY0ZDNjMTJhXkEyXkFqcGc@._V1_FMjpg_UX428_.jpg"
 trailerUrl: "https://www.youtube.com/embed/vnkP0KQf2Z0"
 genres: ["Acción", "Aventura", "Peleas", "Ciencia ficción", "Shonen"]
-status: "finalizado"
+episodesTotal: 291
+canonEpisodes: 245
+fillerEpisodes: 36
+mixedEpisodes: 10
 year: 1996
-episodesCount: 291
+studio: "Toei Animation"
 viewtime:
   canon: "97h"
   full: "116h"

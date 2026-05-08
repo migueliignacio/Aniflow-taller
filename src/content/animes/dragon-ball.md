@@ -1,13 +1,17 @@
 ---
 title: "Dragon Ball"
 slug: "dragon-ball"
-synopsis: 'Un niño con cola de mono llamado Goku emprende un viaje para encontrar las siete Bolas de Dragón, objetos mágicos capaces de conceder cualquier deseo. En su aventura conoce aliados, enfrenta enemigos y entrena para convertirse en el luchador más fuerte.'
+synopsis: "Un niño con cola de mono llamado Goku emprende un viaje para encontrar las siete Bolas de Dragón, objetos mágicos capaces de conceder cualquier deseo. En su aventura conoce aliados, enfrenta enemigos y entrena para convertirse en el luchador más fuerte."
+status: "finished"
 coverImage: "https://m.media-amazon.com/images/M/MV5BMGQ0ZWE4NDYtYWY0Mi00MjE0LWI1MzctZDA1NGExYzE3N2FiXkEyXkFqcGc@._V1_FMjpg_UY3000_.jpg"
 trailerUrl: "https://www.youtube.com/embed/Wb4aDGvjO1U"
 genres: ["Acción", "Aventura", "Comedia", "Artes Marciales", "Shonen"]
-status: "finalizado"
+episodesTotal: 153
+canonEpisodes: 128
+fillerEpisodes: 21
+mixedEpisodes: 4
 year: 1986
-episodesCount: 153
+studio: "Toei Animation"
 viewtime:
   canon: "51h"
   full: "61h"

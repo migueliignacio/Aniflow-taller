@@ -2,12 +2,16 @@
 title: "Attack on Titan"
 slug: "attack-on-titan"
 synopsis: "En un mundo donde la humanidad vive rodeada por enormes titanes, Eren Yeager jura exterminarlos después de presenciar cómo destruyen su hogar y devoran a su madre. Una historia oscura sobre supervivencia, sacrificio y los secretos de la humanidad."
+status: "finished"
 coverImage: "https://www.grimdarkmagazine.com/wp-content/uploads/2025/05/Attack-on-Titan-Cover-Image.jpg"
 trailerUrl: "https://www.youtube.com/embed/qGJK6nNBE_0"
 genres: ["Acción", "Drama", "Terror", "Shonen"]
-status: "finalizado"
+episodesTotal: 87
+canonEpisodes: 81
+fillerEpisodes: 0
+mixedEpisodes: 6
 year: 2013
-episodesCount: 87
+studio: "Wit Studio / MAPPA"
 viewtime:
   canon: "85h"
   full: "120h"

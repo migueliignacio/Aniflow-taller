@@ -18,17 +18,33 @@ const anime = defineCollection({
     title: z.string(),
     slug: z.string(),
     synopsis: z.string(),
-    status: z.enum(["finalizado", "en emisión", "cancelado"]),
+    status: z.enum(["finished", "ongoing"]),
     coverImage: z.url(),
     trailerUrl: z.url().optional(),
     genres: z.array(z.string()),
-    episodesCount: z.number(),
+    episodesTotal: z.number(),
+    canonEpisodes: z.number(),
+    fillerEpisodes: z.number(),
+    mixedEpisodes: z.number(),
     year: z.number(),
+    studio: z.string(),
     viewtime: z.object({
       canon: z.string(),
       full: z.string(),
     }),
     episodes: episodesSchema.optional(),
+  }).transform((data) => {
+    const total = data.episodesTotal;
+    
+    return {
+      ...data,
+      
+      stats: {
+        canonPercent: total > 0 ? Math.round((data.canonEpisodes / total) * 100) : 0,
+        fillerPercent: total > 0 ? Math.round((data.fillerEpisodes / total) * 100) : 0,
+        mixedPercent: total > 0 ? Math.round((data.mixedEpisodes / total) * 100) : 0,
+      }
+    };
   }),
 });
 
